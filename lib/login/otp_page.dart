@@ -165,10 +165,10 @@ class _OtpPageState extends State<OtpPage> {
                   padding: EdgeInsets.only(top: 650.0, left: 25.0),
                   child: Container(
                     height: height * 0.06,
-                    width: width * 0.27,
+                    width: width * 0.26,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff831E1E),
+                          backgroundColor: Color(0xffd41012),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(17.0)
                           )
@@ -179,17 +179,18 @@ class _OtpPageState extends State<OtpPage> {
                               print(otpcode);
                               data = widget.user!.phone.toString();
                               print(data);
-                              otpApi(data.toString(), otpcode.toString(), context);
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPassword(user: widget.user)));
+
+                              verifyOtpApi(data.toString(), otpcode.toString(), context);
                             }else{
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Please fill all the field'),
                                     duration: Duration(seconds: 1),
                                   ));
                             }
-                            
                           });
                       },
-                      child: Text("Proceed",style: TextStyle(fontSize: 15.0.dp,color: Colors.white70)),),
+                      child: FittedBox(child: Text("Proceed",style: TextStyle(fontSize: 14.0.dp,color: Colors.white70))),),
                   ),
                 ),
               ],
@@ -222,12 +223,12 @@ class _OtpPageState extends State<OtpPage> {
     }
   }
 
-  Future<void> otpApi(String phone, otp, BuildContext context) async {
+  Future<void> verifyOtpApi(String phone, otp, BuildContext context) async {
     try{
       responce = await http. post(
-          Uri.parse('https://achujozef.pythonanywhere.com/api/send_otp/'),
+          Uri.parse('https://achujozef.pythonanywhere.com/api/verify_otp/'),
           body:  {
-            "phonenumber": widget.user!.phone.toString(),
+            "phoneNumber": widget.user!.phone.toString(),
             "otp" : otpcode.toString()
           }
       );

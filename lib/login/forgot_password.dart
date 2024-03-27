@@ -145,7 +145,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Row(
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(top: 685.0, left: 20.0),
+                    padding: const EdgeInsets.only(top: 685.0, left: 18.0),
                     child: Text("New to Gym?",style: TextStyle(fontSize: 15.0.dp,color: Colors.white70),)
                 ),
                 Padding(
@@ -157,13 +157,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: Text("Login",style: TextStyle(fontSize: 15.0.dp,color: Colors.white70,fontWeight: FontWeight.bold),))
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 680.0, left: 90.0),
+                  padding: EdgeInsets.only(top: 680.0, left: 85.0),
                   child: Container(
                     height: height * 0.06,
-                    width: width * 0.25,
+                    width: width * 0.265,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff831E1E),
+                          backgroundColor: Color(0xffd41012),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(17.0)
                           )
@@ -176,7 +176,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           }
                         });
                       },
-                      child: Text("Submit",style: TextStyle(fontSize: 15.0.dp,color: Colors.white70)),),
+                      child: Text("Submit",style: TextStyle(fontSize: 14.0.dp,color: Colors.white70)),),
                   ),
                 ),
               ],

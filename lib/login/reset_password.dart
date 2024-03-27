@@ -178,7 +178,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   width: width * 0.70,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff831E1E),
+                        backgroundColor: Color(0xffd41012),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17.0)
                         )

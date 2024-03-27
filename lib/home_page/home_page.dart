@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       InkWell(
-                        child: Icon(Icons.notifications,
+                        child: Icon(Icons.notifications,color: Colors.white,
                           size: 29.dp,),
                         onTap: (){
                           setState(() {
