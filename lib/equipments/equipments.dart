@@ -161,7 +161,7 @@ class _EquipmentsState extends State<Equipments> {
                                             ),)),
                                             Flexible(
                                                 flex: 5,
-                                                child: Text('this rowing machineis the type ofequipment that is basically used for stimulating action of the watercraft rowing for training or exercising.',style: TextStyle(
+                                                child: Text('${get_responcebody[index]['additional_notes']}',style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 11.0.dp,
                                                     color: Colors.white
@@ -258,7 +258,7 @@ class _EquipmentsState extends State<Equipments> {
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
         print(isTokenExpired);
 
-        // print('From getapi: ${accessToken}');
+       // print('From getapi: ${accessToken}');
         print('From equipmentapi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {

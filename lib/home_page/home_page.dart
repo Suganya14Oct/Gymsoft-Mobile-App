@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -202,36 +203,38 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 borderRadius: BorderRadius.all(Radius.circular(20.0))
                               ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 3.7.h,
-                                        width: 4.4.w,
-                                        margin: EdgeInsets.only(top: 15.0,left: 10.0,right: 5.0),
-                                        child: Image.asset("assets/finish.png"),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 15.0),
-                                        child: Text("Finished",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
-                                      )
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 27.0),
-                                    //child: Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
-                                    child: get_responcebody != null
-                                        ? Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
-                                        : SizedBox(
-                                          height: 2.h,width: 4.w,
-                                        child: CircularProgressIndicator(color: Colors.white,))
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 23.0),
-                                    child: Text('Completed\n      Days',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
-                                  )
-                                ],
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 3.7.h,
+                                          width: 4.4.w,
+                                          margin: EdgeInsets.only(top: 15.0,left: 10.0,right: 5.0),
+                                          child: Image.asset("assets/finish.png"),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 15.0),
+                                          child: Text("Finished",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 27.0),
+                                      //child: Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                      child: get_responcebody != null
+                                          ? Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                          : SizedBox(
+                                            height: 2.h,width: 4.w,
+                                          child: CircularProgressIndicator(color: Colors.white,))
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 23.0),
+                                      child: Text('Completed\n      Days',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             Column(
@@ -247,39 +250,41 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       borderRadius: BorderRadius.all(Radius.circular(20.0))
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 3.7.h,
-                                            width: 4.4.w,
-                                            margin: EdgeInsets.only(top: 8.0,left: 25.0,right: 5.0),
-                                            child: Image.asset("assets/inprogress.png"),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 8.0),
-                                            child: Text("Current Weight",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 50.0),
-                                            child: get_responcebody != null
-                                                ? Text('${get_responcebody!['latest_weight']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 28.0.dp))
-                                                : SizedBox(
-                                                height: 2.h,width: 4.w,
-                                                child: CircularProgressIndicator(color: Colors.white,))
-                                          ),
-                                          // Padding(
-                                          //   padding: EdgeInsets.only(left: 8.0),
-                                          //   child: Text('workouts',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 11.0.dp),),
-                                          // )
-                                        ],
-                                      )
-                                    ],
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 3.6.h,
+                                              width: 4.4.w,
+                                              margin: EdgeInsets.only(top: 7.0,left: 25.0,right: 5.0),
+                                              child: Image.asset("assets/inprogress.png"),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(top: 8.0),
+                                              child: Text("Current Weight",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(left: 50.0),
+                                              child: get_responcebody != null
+                                                  ? FittedBox(child: Text('${get_responcebody!['latest_weight']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 28.0.dp)))
+                                                  : SizedBox(
+                                                  height: 2.h,width: 4.w,
+                                                  child: CircularProgressIndicator(color: Colors.white,))
+                                            ),
+                                            // Padding(
+                                            //   padding: EdgeInsets.only(left: 8.0),
+                                            //   child: Text('workouts',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 11.0.dp),),
+                                            // )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(

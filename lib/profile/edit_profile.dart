@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:get/get.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
 import 'package:gymsoft/home_page/main_screen.dart';
 import 'package:gymsoft/profile/profile.dart';
@@ -37,22 +38,41 @@ class _EditProfileState extends State<EditProfile> {
 
   var put_responcebody;
 
+  var p_image;
+
   final strg = SharedPreferences.getInstance();
 
   final sharedPreferences =   SharedPreferences.getInstance();
   var ObtainedaccesstToken;
 
+
   final _formkey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
+  late TextEditingController _firstnameController;
+  late TextEditingController _secondnameController;
+  final  _ageController = TextEditingController();
   final _heightController = TextEditingController();
   final _weightController = TextEditingController();
+
+  @override
+  void initState() {
+    print('from edit profile:');
+    _firstnameController = TextEditingController(text: widget.apiData[2].toString());
+    _secondnameController = TextEditingController(text: widget.apiData[3].toString());
+    p_image = widget.apiData[5];
+    print(p_image);
+    print(_firstnameController.text);
+    print(_secondnameController.text);
+    super.initState();
+  }
+
+
 
   @override
   void dispose(){
     _weightController.dispose();
     _heightController.dispose();
-    _nameController.dispose();
+    _firstnameController.dispose();
+    _secondnameController.dispose();
     _ageController.dispose();
     super.dispose();
 
@@ -66,18 +86,14 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  @override
-  void initState() {
-    print('from edit profile:');
-    print(widget.apiData[2]);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
+    //ProfileController profileController = Get.put(ProfileController(profilemodel: profilemodel!));
 
     return Consumer<MainScreenNotifier>(builder: (context, mainScreenNotifier, child){
      return Scaffold(
@@ -137,7 +153,13 @@ class _EditProfileState extends State<EditProfile> {
                                         child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 20.dp,)
                                     ),
                                   ),
-                                  Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 25.dp ),)
+                                  InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        //print(profileController.weight);
+                                      });
+                                    },
+                                      child: Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 25.dp ),))
                                 ],
                               ),
                               Row(
@@ -147,7 +169,7 @@ class _EditProfileState extends State<EditProfile> {
                                     height: 105,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                        color: _selectedImage == null ? Colors.lightBlueAccent : Colors.transparent,
+                                       // color: _selectedImage == null ? Colors.lightBlueAccent : Colors.transparent,
                                         borderRadius: BorderRadius.circular(100)
                                       //more than 50% of width makes circle
                                     ),
@@ -158,7 +180,11 @@ class _EditProfileState extends State<EditProfile> {
                                           //backgroundColor: Colors.blueGrey,
                                             radius: 100.0,
                                             backgroundImage: FileImage(_selectedImage!)
-                                        ) : SizedBox(),
+                                        ) : CircleAvatar(
+                                          //backgroundColor: Colors.blueGrey,
+                                            radius: 100.0,
+                                            backgroundImage: NetworkImage(p_image),
+                                        ),
                                         Positioned(
                                             height: 150,left: 10.0,top: 10.0,
                                             child: InkWell(
@@ -263,7 +289,7 @@ class _EditProfileState extends State<EditProfile> {
                                             style: TextStyle(
                                                 color: Colors.white70,fontFamily: 'Telex',fontSize: 14.5.dp
                                             ),
-                                            controller: _nameController,
+                                            controller: _firstnameController,
                                             cursorColor: Colors.grey,
                                             decoration: InputDecoration(
                                               fillColor: Colors.black26,
@@ -281,7 +307,7 @@ class _EditProfileState extends State<EditProfile> {
                                               ),
                                               prefixIcon: Icon(Icons.person, color: Colors.white,),
 
-                                              label: Text(widget.apiData[2].toString(),style: TextStyle(
+                                              label: Text('',style: TextStyle(
                                                   color:Colors.white70,fontSize: 15.0.dp
                                               ),
                                               ),
@@ -309,7 +335,7 @@ class _EditProfileState extends State<EditProfile> {
                                             style: TextStyle(
                                                 color: Colors.white70,fontFamily: 'Telex',fontSize: 14.5.dp
                                             ),
-                                            controller: _nameController,
+                                            controller: _secondnameController,
                                             cursorColor: Colors.grey,
                                             decoration: InputDecoration(
                                               fillColor: Colors.black26,
@@ -326,11 +352,6 @@ class _EditProfileState extends State<EditProfile> {
                                                   borderRadius: BorderRadius.circular(15.0)
                                               ),
                                               prefixIcon: Icon(Icons.person, color: Colors.white,),
-
-                                              label: Text(widget.apiData[3].toString(),style: TextStyle(
-                                                  color:Colors.white70,fontSize: 15.0.dp
-                                              ),
-                                              ),
                                             ),
                                             validator: (value){
                                               if(value == null || value.isEmpty){
@@ -401,13 +422,6 @@ class _EditProfileState extends State<EditProfile> {
                                                     ),
                                                     ),
                                                   ),
-                                                  // validator: (value){
-                                                  //   if(value == null || value.isEmpty){
-                                                  //     return "Please enter your Name";
-                                                  //   }else if(value.length > 3){
-                                                  //     return "Enter atleast 4 letters";
-                                                  //   }return null;
-                                                  // }
                                                 ),
 
                                               ],

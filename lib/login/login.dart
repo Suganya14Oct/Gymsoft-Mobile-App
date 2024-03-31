@@ -199,55 +199,57 @@ class _LoginScreenState extends State<LoginScreen> {
                                    }
                                ),
                              ),
+                             SizedBox(height: 20.0.dp,),
+                             Row(
+                               children: [
+                                 GestureDetector(
+                                     onTap: (){
+                                       setState(() {
+                                         Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                       });
+                                     },
+                                     child: Container(
+                                         padding: EdgeInsets.only(left: 20.0, right: 8.0,top : 10.0),
+                                         height: height * 0.05,
+                                         width: width * 0.4,
+                                         child: FittedBox(child: Center(child: Text("Forgot Password?",style: TextStyle(fontSize: 12.0.dp, color: Colors.white70),))))),
+                                 Expanded(
+                                   child: Padding(
+                                     padding: EdgeInsets.only(left: 90.0, right: 30.0,top: 10.0),
+                                     child: Container(
+                                       height: height * 0.06,
+                                       width: width * 0.25,
+                                       child: ElevatedButton(
+                                         style: ElevatedButton.styleFrom(
+                                             backgroundColor: Color(0xffd41012),
+                                             shape: RoundedRectangleBorder(
+                                                 borderRadius: BorderRadius.circular(17.0)
+                                             )
+                                         ),
+                                         onPressed: () async{
+                                           if(_formkey.currentState!.validate()) {
+                                   
+                                             try{
+                                               await _api.loginApi(_phoneController.text.toString(), _passwordController.text.toString(), context);
+                                             }catch (e) {
+                                               print('Login Error: $e');
+                                             }
+                                   
+                                           }else{
+                                             setState(() {
+                                               print("Error");
+                                               print(_phoneController.text.toString());
+                                               print(_passwordController.text.toString());
+                                             });
+                                           }
+                                         },
+                                         child: Text("Login",style: TextStyle(fontSize: 15.0.dp,color: Colors.white)),),
+                                     ),
+                                   ),
+                                 ),
+                               ],
+                             )
                            ],
-                         ),
-                       ),
-
-                       Positioned(
-                         top: 650.0,
-                         left: 20.0,
-                         child: GestureDetector(
-                           onTap: (){
-                             setState(() {
-                               Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                             });
-                           },
-                             child: Container(
-                                 height: height * 0.05,
-                                 width: width * 0.4,
-                                 child: FittedBox(child: Text("Forgot Password?",style: TextStyle(fontSize: 14.0.dp,fontWeight: FontWeight.bold, color: Colors.white70),)))),
-                       ),
-                       Positioned(
-                         top: 650.0,
-                         right: 20.0,
-                         child: Container(
-                           height: height * 0.06,
-                           width: width * 0.25,
-                           child: ElevatedButton(
-                             style: ElevatedButton.styleFrom(
-                               backgroundColor: Color(0xffd41012),
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(17.0)
-                               )
-                             ),
-                             onPressed: () async{
-                                 if(_formkey.currentState!.validate()) {
-                   
-                                   try{
-                                     await _api.loginApi(_phoneController.text.toString(), _passwordController.text.toString(), context);
-                                   }catch (e) {
-                                     print('Login Error: $e');
-                                   }
-                   
-                                 }else{
-                                   setState(() {
-                                     print("Error");
-                                     print(_phoneController.text.toString());
-                                     print(_passwordController.text.toString());
-                                   });
-                                 }
-                             },
-                             child: Text("Login",style: TextStyle(fontSize: 15.0.dp,color: Colors.white)),),
                          ),
                        ),
                      ],

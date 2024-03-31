@@ -39,10 +39,17 @@ class _ProfileState extends State<Profile> {
   double minValue = 0.0;
   double maxValue = 100.0;
 
+   double? currentWeight;
+   double? initialWeight;
+
+
+
+
 
   @override
   void initState() {
     setState(() {
+
       // _isMounted = true;
       print('fetchData() function called from iniState');
       fetchData();
@@ -93,6 +100,25 @@ class _ProfileState extends State<Profile> {
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
+    if (currentWeight == null || initialWeight == null) {
+      // Handle null values here, return a placeholder widget or an error message
+      return Center(child: CircularProgressIndicator());
+    }
+
+    double weightDifference = currentWeight! - initialWeight!;
+
+    double maxChange = 10;
+    double segmentChange = maxChange / 3;
+
+    double lossSegmentMax = initialWeight!;
+    double lossSegmentMin = initialWeight! - segmentChange;
+
+    double neutralSegmentMax = initialWeight! + segmentChange;
+    double neutralSegmentMin = initialWeight! - segmentChange;
+
+    double gainSegmentMax = currentWeight!;
+    double gainSegmentMin = initialWeight! + segmentChange;
 
 
     return Consumer<MainScreenNotifier>(builder: (context, mainScreenNotifier, child){
@@ -282,58 +308,66 @@ class _ProfileState extends State<Profile> {
                         height: height * 0.3,
                         width: width * 0.7,
                         //color: Colors.white70,
-                        child:  SfRadialGauge(
-                          axes: [
+                        child:  (currentWeight != null && initialWeight != null)
+                            ? SfRadialGauge(
+                          //backgroundColor: Colors.white10,
+                              axes: [
                             RadialAxis(
                               // minimum: get_responcebody != null
                               //     ? '${get_responcebody!['initial_weight']}'
                               //     : 0,
-                              minimum: maxValue,
-                              maximum: minValue,
+                              minimum: currentWeight!,
+                              maximum: initialWeight!,
+                              axisLineStyle: AxisLineStyle(
+                                thicknessUnit: GaugeSizeUnit.factor,thickness: 0.03
+                              ),
+                              minorTickStyle: MinorTickStyle(length: 3,thickness: 3,color: Colors.white),
+                              majorTickStyle: MajorTickStyle(length: 6,thickness: 4,color: Colors.white),
                               axisLabelStyle:GaugeTextStyle(
+                                color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12),
                               useRangeColorForAxis: true,
                               ranges: [
+                                // GaugeRange(
+                                //   startValue: lossSegmentMin,
+                                //   endValue: lossSegmentMax,
+                                //   color: Colors.red,
+                                //   // startWidth: 0.05,
+                                //   // endWidth: 25,
+                                //   gradient: const SweepGradient(
+                                //       colors: <Color>[Color(0xFFBC4E9C), Color(0xFFF80759)],
+                                //       stops: <double>[0.25, 0.75]),
+                                // ),
+                                // GaugeRange(
+                                //   startValue: neutralSegmentMin,
+                                //   endValue: neutralSegmentMax,
+                                //   color: Colors.yellow,
+                                //   // startWidth: 0.05,
+                                //   // endWidth: 25,
+                                //   gradient: const SweepGradient(
+                                //       colors: <Color>[Colors.orangeAccent, Colors.yellow],
+                                //       stops: <double>[0.25, 0.75]),
+                                // ),
                                 GaugeRange(
-                                  startValue: maxValue,
-                                  endValue: 78,
-                                  color: Colors.red,
-                                  startWidth: 0.05,
-                                  endWidth: 25,
-                                  gradient: const SweepGradient(
-                                      colors: <Color>[Color(0xFFBC4E9C), Color(0xFFF80759)],
-                                      stops: <double>[0.25, 0.75]),
-                                ),
-                                GaugeRange(
-                                  startValue: 78,
-                                  endValue: 87,
-                                  color: Colors.yellow,
-                                  startWidth: 0.05,
-                                  endWidth: 25,
-                                  gradient: const SweepGradient(
-                                      colors: <Color>[Colors.orangeAccent, Colors.yellow],
-                                      stops: <double>[0.25, 0.75]),
-                                ),
-                                GaugeRange(
-                                  startValue: 87,
-                                  endValue: 95,
+                                  startValue: gainSegmentMin,
+                                  endValue: gainSegmentMax,
                                   color: Colors.green,
-                                  startWidth: 0.05,
-                                  endWidth: 25,
+                                  // startWidth: 0.05,
+                                  // endWidth: 25,
                                   gradient: const SweepGradient(
-                                      colors: <Color>[Colors.greenAccent, Colors.lightGreenAccent],
-                                      stops: <double>[0.25, 0.75]),
+                                      colors: <Color>[Colors.red,Colors.yellow, Colors.green],
+                                      stops: <double>[0.25, 0.95,0.150]),
                                 )
                               ],
                               pointers: [
                                 NeedlePointer(
-                                  value: 90,
+                                  value: currentWeight!,
                                   enableAnimation: true,
                                   needleColor: Colors.white,
                                 ),
                                 MarkerPointer(
-                                  value: 90,
+                                  value: currentWeight!,
                                   enableAnimation: true,
                                   color: Colors.black,
                                 )
@@ -347,7 +381,7 @@ class _ProfileState extends State<Profile> {
                               ],
                             )
                           ],
-                        )
+                        ) : CircularProgressIndicator(),
                       ) :
                     SizedBox(
                         height: 2.h,width: 4.w,
@@ -450,8 +484,8 @@ class _ProfileState extends State<Profile> {
               '${get_responcebody!['profile_picture']}',
             ];
 
-            minValue = get_responcebody['initial_weight'];
-            maxValue = get_responcebody['weight'];
+            initialWeight = get_responcebody['initial_weight'];
+            currentWeight = get_responcebody['weight'];
 
           });
         }
