@@ -85,6 +85,9 @@ flutter:
       - assets/gym_equipment.png
       - assets/feedback.png
       - assets/diet_small.png
+      - assets/name.png
+      - assets/clock.png
+      - assets/item.png
       - assets/planning.png
 
   # To add assets to your application, add an assets section, like this:

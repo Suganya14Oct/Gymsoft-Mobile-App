@@ -43,9 +43,6 @@ class _ProfileState extends State<Profile> {
    double? initialWeight;
 
 
-
-
-
   @override
   void initState() {
     setState(() {
