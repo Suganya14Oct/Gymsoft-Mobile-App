@@ -49,9 +49,9 @@ class _EditProfileState extends State<EditProfile> {
   final _formkey = GlobalKey<FormState>();
   late TextEditingController _firstnameController;
   late TextEditingController _secondnameController;
-  final  _ageController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _weightController = TextEditingController();
+  late TextEditingController _ageController;
+  late TextEditingController _heightController;
+  late TextEditingController _weightController;
 
   @override
   void initState() {
@@ -59,9 +59,15 @@ class _EditProfileState extends State<EditProfile> {
     _firstnameController = TextEditingController(text: widget.apiData[2].toString());
     _secondnameController = TextEditingController(text: widget.apiData[3].toString());
     p_image = widget.apiData[5];
+    _weightController = TextEditingController(text: widget.apiData[0].toString());
+    _heightController = TextEditingController(text: widget.apiData[1].toString());
+    _ageController = TextEditingController(text: widget.apiData[4].toString());
     print(p_image);
     print(_firstnameController.text);
     print(_secondnameController.text);
+    print(_weightController.text);
+    print(_heightController.text);
+    print(_ageController.text);
     super.initState();
   }
 
@@ -327,11 +333,6 @@ class _EditProfileState extends State<EditProfile> {
                                         //color: Colors.blueGrey,
                                         alignment: Alignment.center,
                                         child: TextFormField(
-                                            onTap: (){
-                                              setState(() {
-
-                                              });
-                                            },
                                             style: TextStyle(
                                                 color: Colors.white70,fontFamily: 'Telex',fontSize: 14.5.dp
                                             ),
@@ -378,7 +379,7 @@ class _EditProfileState extends State<EditProfile> {
                                           child: Container(
                                             height: 20.dp,
                                             width: 55.dp,
-                                            // color: Colors.blueGrey,
+                                            //color: Colors.blueGrey,
                                             alignment: Alignment.center,
                                             child: Stack(
                                               children: [
@@ -390,23 +391,18 @@ class _EditProfileState extends State<EditProfile> {
                                                       child: Icon(Icons.edit,color: Colors.white,size: 10.0.dp,)),
                                                 ),
                                                 TextFormField(
-                                                  onTap: (){
-                                                    setState(() {
-
-                                                    });
-                                                  },
                                                   style: TextStyle(
                                                       color: Colors.white70,fontFamily: 'Telex',fontSize: 10.0.dp
                                                   ),
                                                   keyboardType: TextInputType.number,
                                                   controller: _weightController,
                                                   cursorColor: Colors.grey,
-                                                  cursorHeight: 10.0.dp,
-                                                  cursorWidth: 1.5.dp,
+                                                  // cursorHeight: 10.0.dp,
+                                                  // cursorWidth: 1.5.dp,
                                                   decoration: InputDecoration(
                                                     fillColor: Colors.black26,
                                                     filled: true,
-                                                    contentPadding: EdgeInsets.all(15.0),
+                                                    //contentPadding: EdgeInsets.all(15.0),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(5.0),
                                                         borderSide: BorderSide(
@@ -416,10 +412,6 @@ class _EditProfileState extends State<EditProfile> {
                                                     focusedBorder: OutlineInputBorder(
                                                         borderSide: BorderSide(color: Colors.white),
                                                         borderRadius: BorderRadius.circular(5.0)
-                                                    ),
-                                                    label: Text(widget.apiData[1].toString(),style: TextStyle(
-                                                        color:Colors.white70,fontSize: 7.2.dp
-                                                    ),
                                                     ),
                                                   ),
                                                 ),
@@ -438,7 +430,7 @@ class _EditProfileState extends State<EditProfile> {
                                           child: Container(
                                             height: 20.dp,
                                             width: 55.dp,
-                                            // color: Colors.blueGrey,
+                                             //color: Colors.blueGrey,
                                             alignment: Alignment.center,
                                             child: Stack(
                                               children: [
@@ -451,22 +443,17 @@ class _EditProfileState extends State<EditProfile> {
                                                 ),
                                                 TextFormField(
                                                   keyboardType: TextInputType.number,
-                                                  onTap: (){
-                                                    setState(() {
-
-                                                    });
-                                                  },
                                                   style: TextStyle(
-                                                      color: Colors.white70,fontFamily: 'Telex',fontSize: 10.0.dp
+                                                      color: Colors.white70,fontFamily: 'Telex',fontSize: 9.0.dp
                                                   ),
                                                   controller: _heightController,
                                                   cursorColor: Colors.grey,
-                                                  cursorHeight: 10.0.dp,
-                                                  cursorWidth: 1.5.dp,
+                                                  // cursorHeight: 10.0.dp,
+                                                  // cursorWidth: 1.5.dp,
                                                   decoration: InputDecoration(
                                                     fillColor: Colors.black26,
                                                     filled: true,
-                                                    contentPadding: EdgeInsets.all(15.0),
+                                                    //contentPadding: EdgeInsets.all(15.0),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(5.0),
                                                         borderSide: BorderSide(
@@ -477,18 +464,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         borderSide: BorderSide(color: Colors.white),
                                                         borderRadius: BorderRadius.circular(5.0)
                                                     ),
-                                                    label: Text(widget.apiData[2].toString(),style: TextStyle(
-                                                        color:Colors.white70,fontSize: 7.3.dp
-                                                    ),
-                                                    ),
                                                   ),
-                                                  // validator: (value){
-                                                  //   if(value == null || value.isEmpty){
-                                                  //     return "Empty";
-                                                  //   }else if(value.length > 3){
-                                                  //     return "Empty";
-                                                  //   }return null;
-                                                  // }
                                                 ),
                                               ],
                                             ),
@@ -517,10 +493,9 @@ class _EditProfileState extends State<EditProfile> {
                                                       child: Icon(Icons.edit,color: Colors.white,size: 10.0.dp,)),
                                                 ),
                                                 TextFormField(
+                                                  textAlign: TextAlign.center,
                                                   onTap: (){
-                                                    setState(() {
-
-                                                    });
+                                                    print('from textform field: ${_ageController.text}');
                                                   },
                                                   style: TextStyle(
                                                       color: Colors.white70,fontFamily: 'Telex',fontSize: 10.0.dp
@@ -528,12 +503,12 @@ class _EditProfileState extends State<EditProfile> {
                                                   keyboardType: TextInputType.number,
                                                   controller: _ageController,
                                                   cursorColor: Colors.grey,
-                                                  cursorHeight: 10.0.dp,
-                                                  cursorWidth: 1.5.dp,
+                                                  // cursorHeight: 10.0.dp,
+                                                  // cursorWidth: 1.5.dp,
                                                   decoration: InputDecoration(
                                                     fillColor: Colors.black26,
                                                     filled: true,
-                                                    contentPadding: EdgeInsets.all(15.0),
+                                                    //contentPadding: EdgeInsets.all(15.0),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(5.0),
                                                         borderSide: BorderSide(
@@ -544,46 +519,11 @@ class _EditProfileState extends State<EditProfile> {
                                                         borderSide: BorderSide(color: Colors.white),
                                                         borderRadius: BorderRadius.circular(5.0)
                                                     ),
-                                                    label: Text('Age',style: TextStyle(
-                                                        color:Colors.white70,fontSize: 10.0.dp
-                                                    ),
-                                                    ),
                                                   ),
-                                                  // validator: (value){
-                                                  //   if(value == null || value.isEmpty){
-                                                  //     return "Please enter your Name";
-                                                  //   }else if(value.length > 3){
-                                                  //     return "fill correct age";
-                                                  //   }return null;
-                                                  // }
                                                 ),
                                               ],
                                             ),
                                           )
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 5.5.h,
-                                        width: 11.5.w,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.white,
-                                                width: 1.5
-                                            )
-                                        ),
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text('50',textAlign: TextAlign.center,style: TextStyle(
-                                              color: Colors.white,fontSize: 18.dp
-                                          ),),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5.0),
-                                        child: Text('WorkOut',style: TextStyle(color: Colors.white,fontSize: 11.dp),),
                                       )
                                     ],
                                   ),
