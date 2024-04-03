@@ -10,6 +10,7 @@ import 'package:gymsoft/equipments/equipments.dart';
 import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/login/login.dart';
 import 'package:gymsoft/notification/notificat.dart';
+import 'package:gymsoft/plan/plan.dart';
 import 'package:gymsoft/shared/bottom_nav_bar.dart';
 import 'package:gymsoft/trainer/trainer.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -509,31 +510,38 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     )
                                 ),
-                                Container(
-                                    margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                    height: 15.h,
-                                    width: 30.w,
-                                    decoration: BoxDecoration(
-                                        color: Colors.black54,
-                                        border: Border.all(
-                                            color: Colors.white24
-                                        ),
-                                        borderRadius: BorderRadius.all(Radius.circular(20.0))
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 8.h,
-                                          width: 19.w,
-                                          margin: EdgeInsets.only(top: 10.0),
-                                          child: Image.asset("assets/planning.png"),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 10.0),
-                                          child: Text('Plan',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
-                                        )
-                                      ],
-                                    )
+                                InkWell(
+                                  onTap: (){
+                                    setState(() {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Plan()));
+                                    });
+                                  },
+                                  child: Container(
+                                      margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
+                                      height: 15.h,
+                                      width: 30.w,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black54,
+                                          border: Border.all(
+                                              color: Colors.white24
+                                          ),
+                                          borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 8.h,
+                                            width: 19.w,
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Image.asset("assets/planning.png"),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                            child: Text('Plan',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
+                                          )
+                                        ],
+                                      )
+                                  ),
                                 )
                               ],
                             )

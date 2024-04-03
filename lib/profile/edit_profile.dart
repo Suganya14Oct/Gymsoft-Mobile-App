@@ -564,7 +564,6 @@ class _EditProfileState extends State<EditProfile> {
                                 var ObtainedaccesstToken= sharedPreferences.getString('accessToken');
                                 setState(() {
                                   accessToken = ObtainedaccesstToken;
-                                  print('put_Api clicked');
                                   putApi();
                                   //mainScreenNotifier.pageIndex = 3;
                                   //Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(token: '$accessToken')));
@@ -632,11 +631,12 @@ class _EditProfileState extends State<EditProfile> {
   }
 
 
-  putApi({String? weight, height, firstName, lastName, age, image}) async {
+  putApi() async {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     accessToken = prefs.getString('accessToken');
     print(accessToken);
+    print('put_Api clicked');
 
     try {
 
@@ -646,36 +646,28 @@ class _EditProfileState extends State<EditProfile> {
           Uri.parse('https://achujozef.pythonanywhere.com/api/user-profile/edit/'),
         );
 
-        put_response.files.add(await http.MultipartFile.fromPath('img', _selectedImage!.path.toString()));
-
         put_response.headers.addAll({
           'Authorization' : 'Bearer $accessToken',
           'Content-type' : 'multipart/form-data',
+          'Accept': 'application/json'
         });
 
-        if(weight != null){
-          put_response.fields['weight'] = widget.apiData[0].toString();
+          put_response.fields['weight'] = _weightController.text.toString();
+
+          put_response.fields['height'] = _heightController.text.toString();
+
+          put_response.fields['first_name'] =_firstnameController.text.toString();
+
+          put_response.fields['last_name'] = _secondnameController.text.toString();
+
+          put_response.fields['age'] = _ageController.text.toString();
+
+        if(_selectedImage != null){
+          put_response.files.add(await http.MultipartFile.fromPath('profile_picture', _selectedImage!.path));
         }
 
-        if(height != null){
-          put_response.fields['height'] = widget.apiData[1].toString();
-        }
-
-        if(firstName != null){
-          put_response.fields['first_name'] = widget.apiData[2].toString();
-        }
-
-        if(lastName != null){
-          put_response.fields['last_name'] = widget.apiData[3].toString();
-        }
-
-        if(age != null){
-          put_response.fields['age'] = widget.apiData[4].toString();
-        }
-
-
-        final http.StreamedResponse streamedresponse = await put_response.send();
-        final http.Response response = await http.Response.fromStream(streamedresponse);
+        var streamedresponse = await put_response.send();
+        var response = await http.Response.fromStream(streamedresponse);
 
 
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
@@ -684,17 +676,16 @@ class _EditProfileState extends State<EditProfile> {
         print('From putapi: ${accessToken}');
         print('From putapi: ${response.statusCode}');
 
+        if(response.statusCode == 200){
+          print('Profile Updated Successfully');
+        }else{
+          print('Failed to Update profile: ${response.reasonPhrase}');
+        }
+
         if (response.statusCode == 401) {
           await refreshtoken();
         }
-        await putApi(
-          weight: weight,
-          height: height,
-          firstName: firstName,
-          lastName: lastName,
-          age: age,
-          image: image,
-        );
+        await putApi();
       }
     } catch (e) {
       // Handle exceptions or network errors
@@ -703,5 +694,3 @@ class _EditProfileState extends State<EditProfile> {
   }
 
 }
-
-//gjsdhjsdsjdkj

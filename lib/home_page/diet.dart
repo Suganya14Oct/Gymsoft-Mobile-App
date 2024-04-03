@@ -337,7 +337,7 @@ class _DietState extends State<Diet> {
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(top: 8.0),
-                                                child: Text("Time - 1 : 00 pm",
+                                                child: Text("Time - 8 : 00 pm",
                                                   style: TextStyle(color: Colors.white,
                                                       fontFamily: 'Telex',fontSize: 12.0.dp),),
                                               )
@@ -367,7 +367,7 @@ class _DietState extends State<Diet> {
                                                       flex: 7,
                                                       child: Center(
                                                         child: FittedBox(
-                                                          child: Text('Rice (2 Cups),\nFruit Juice 100 ml',
+                                                          child: Text('Chappathi (2),\n Milk 100 ml',
                                                             style: TextStyle(color: Colors.white,
                                                                 fontFamily: 'Telex',fontSize: 12.0.dp),
                                                           ),

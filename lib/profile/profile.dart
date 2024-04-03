@@ -466,11 +466,11 @@ class _ProfileState extends State<Profile> {
         print(isTokenExpired);
 
         //print('From getapi: ${accessToken}');
-        print('From getapi: ${get_response.statusCode}');
+       // print('From getapi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {
           get_responcebody = await json.decode(get_response.body);
-          print('Response: $get_responcebody');
+          //print('Response: $get_responcebody');
           setState(() {
             apiData = [
               '${get_responcebody!['weight']}',
