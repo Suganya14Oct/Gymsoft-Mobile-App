@@ -46,7 +46,6 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     setState(() {
-
       // _isMounted = true;
       print('fetchData() function called from iniState');
       fetchData();
@@ -182,8 +181,8 @@ class _ProfileState extends State<Profile> {
                                     onTap: (){
                                       setState(() {
                                         print('from profile');
-                                        _api.Token.toString();
-                                        print(_api.Token.toString());
+                                        print(currentWeight!);
+                                        print(initialWeight!);
                                       });
                                     },
                                       child: CircleAvatar(
@@ -209,7 +208,6 @@ class _ProfileState extends State<Profile> {
                                             : SizedBox(
                                             height: 2.h,width: 3.w,
                                             child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.dp,))
-
                                       ),
                                     ),
                                   ),
@@ -313,8 +311,10 @@ class _ProfileState extends State<Profile> {
                               // minimum: get_responcebody != null
                               //     ? '${get_responcebody!['initial_weight']}'
                               //     : 0,
-                              minimum: currentWeight!,
-                              maximum: initialWeight!,
+                              minimum: currentWeight! < initialWeight! ? currentWeight! :  initialWeight!,
+                              maximum: initialWeight! > currentWeight! ? initialWeight! : currentWeight!,
+                              // startAngle: 180,
+                              // endAngle: 360,
                               axisLineStyle: AxisLineStyle(
                                 thicknessUnit: GaugeSizeUnit.factor,thickness: 0.03
                               ),

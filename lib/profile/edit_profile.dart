@@ -472,61 +472,6 @@ class _EditProfileState extends State<EditProfile> {
                                       )
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      Icon(Icons.perm_contact_calendar_sharp,color: Colors.white,size: 35.dp,),
-                                      Padding(
-                                          padding: const EdgeInsets.only(top: 5.0),
-                                          child: Container(
-                                            height: 20.dp,
-                                            width: 55.dp,
-                                            // color: Colors.blueGrey,
-                                            alignment: Alignment.center,
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  right: 52,
-                                                  bottom: 1,
-                                                  child: Container(
-                                                      height: 10,
-                                                      //color: Colors.red,
-                                                      child: Icon(Icons.edit,color: Colors.white,size: 10.0.dp,)),
-                                                ),
-                                                TextFormField(
-                                                  textAlign: TextAlign.center,
-                                                  onTap: (){
-                                                    print('from textform field: ${_ageController.text}');
-                                                  },
-                                                  style: TextStyle(
-                                                      color: Colors.white70,fontFamily: 'Telex',fontSize: 10.0.dp
-                                                  ),
-                                                  keyboardType: TextInputType.number,
-                                                  controller: _ageController,
-                                                  cursorColor: Colors.grey,
-                                                  // cursorHeight: 10.0.dp,
-                                                  // cursorWidth: 1.5.dp,
-                                                  decoration: InputDecoration(
-                                                    fillColor: Colors.black26,
-                                                    filled: true,
-                                                    //contentPadding: EdgeInsets.all(15.0),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(5.0),
-                                                        borderSide: BorderSide(
-                                                          color: Colors.white70,
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderSide: BorderSide(color: Colors.white),
-                                                        borderRadius: BorderRadius.circular(5.0)
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      )
-                                    ],
-                                  ),
                                 ],
                               )
                             ],
@@ -649,18 +594,18 @@ class _EditProfileState extends State<EditProfile> {
         put_response.headers.addAll({
           'Authorization' : 'Bearer $accessToken',
           'Content-type' : 'multipart/form-data',
-          'Accept': 'application/json'
+          //'Accept': 'application/json'
         });
 
           put_response.fields['weight'] = _weightController.text.toString();
 
           put_response.fields['height'] = _heightController.text.toString();
 
-          put_response.fields['first_name'] =_firstnameController.text.toString();
+          put_response.fields['first_name'] = _firstnameController.text.toString();
 
           put_response.fields['last_name'] = _secondnameController.text.toString();
 
-          put_response.fields['age'] = _ageController.text.toString();
+         // put_response.fields['age'] = _ageController.text.toString();
 
         if(_selectedImage != null){
           put_response.files.add(await http.MultipartFile.fromPath('profile_picture', _selectedImage!.path));
