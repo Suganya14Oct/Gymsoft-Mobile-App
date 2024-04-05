@@ -132,7 +132,12 @@ class _PlanState extends State<Plan> {
                               InkWell(
                                 onTap : (){
                                   setState(() {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyPlan(description: get_responcebody[index]['description'],)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyPlan(
+                                      description: get_responcebody[index]['description'],
+                                      img: get_responcebody[index]['image'],
+                                      terms_cons: get_responcebody[index]['terms_and_conditions'],
+                                       features: get_responcebody[index]['features'],
+                                    )));
                                   });
                                 },
                                 child: Container(
@@ -191,7 +196,7 @@ class _PlanState extends State<Plan> {
                                       child: CircleAvatar(
                                           child:  ClipOval(
                                               child:
-                                              Image.network('https://res.cloudinary.com/dkocmifft/image/upload/v1/user_profile_pictures/WhatsApp_Image_2024-02-10_at_19.30.09_33d00ad6_lqme3t',
+                                              Image.network('${get_responcebody[index]['image']}',
                                                 fit: BoxFit.cover,
                                                 errorBuilder: (context, error, stackTrace){
                                                   print('Error loading image: $error');

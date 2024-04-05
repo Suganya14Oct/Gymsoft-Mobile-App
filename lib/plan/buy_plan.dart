@@ -1,12 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:gymsoft/payment/payment.dart';
 
 class BuyPlan extends StatefulWidget {
 
   String? description;
+  String? img;
+  String? terms_cons;
+  List? features;
 
-  BuyPlan({super.key, required this.description});
+  BuyPlan({super.key,
+    required this.description,
+    required this.img,
+    required this.terms_cons,
+    required this.features
+  });
 
   @override
   State<BuyPlan> createState() => _BuyPlanState();
@@ -23,6 +32,12 @@ class _BuyPlanState extends State<BuyPlan> {
   var refresh_response;
 
   var Token;
+
+  @override
+  void initState() {
+    print('from features: ${widget.features.toString()}');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +66,7 @@ class _BuyPlanState extends State<BuyPlan> {
                 height: height,
                 width: width,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                         height: 10.0.h,
@@ -93,12 +109,13 @@ class _BuyPlanState extends State<BuyPlan> {
                     Container(
                       height: 200,
                       width: 300,
+                      padding: EdgeInsets.only(left: 65.0),
                       decoration: BoxDecoration(
                         //color: Colors.amber,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Image.network(
-                          'https://res.cloudinary.com/dkocmifft/image/upload/v1/user_profile_pictures/WhatsApp_Image_2024-02-10_at_19.30.09_33d00ad6_lqme3t',
+                          '${widget.img.toString()}',
                       fit: BoxFit.contain,
                       ),
                     ),
@@ -107,23 +124,34 @@ class _BuyPlanState extends State<BuyPlan> {
                     ),
                     Container(
                       alignment: Alignment.center,
-                     // width: 300,
-                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                      //color: Colors.amber,
-                      child: Expanded(
-                        child: Text('->  Fitness Level: Advanced\n'
-                            '->  Duration: 4 weeks\n'
-                            '->  WorkOuts per week: 3 workouts per week\n'
-                            '->  Average workout duration: 15 - 30 minutes\n'
-                            '->  Equipment needed: Full Gym\n'
-                            '->  Goal: Build muscle',
-                          //overflow: TextOverflow.visible,
-                          style: TextStyle(
-                              //fontWeight: FontWeight.bold,
-                              fontSize: 12.0.dp,
-                              color: Colors.white
+                      padding: EdgeInsets.only(left: 30.0, right: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: widget.features!.length,
+                            itemBuilder: (BuildContext context, int index){
+                              return Row(
+                                children: [
+                                  Text('->',style: TextStyle(
+                                  fontSize: 12.0.dp,
+                                  color: Colors.white
+                              ),),
+                                  SizedBox(width: 2.w),
+                                  Expanded(
+                                    child: Text('${widget.features![0]}',
+                                      style: TextStyle(
+                                        fontSize: 12.0.dp,
+                                        color: Colors.white
+                                    ),),
+                                  ),
+                                ],
+                              );
+                            }
                           ),
-                        ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -133,20 +161,19 @@ class _BuyPlanState extends State<BuyPlan> {
                       height: 20.h,
                       alignment: Alignment.center,
                       width: 87.w,
+                      margin: EdgeInsets.only(left: 6.0.w),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
                       //color: Colors.amber,
-                      child: Expanded(
-                        child: Text('This is a systematic effective approach to arm training like nothing else out there. You will get workouts to be attached to your current program. plus one standalone arm pump session that you will definitely feel the next day! ',
-                          //overflow: TextOverflow.visible,
-                          style: TextStyle(
-                              //fontWeight: FontWeight.bold,
-                              fontSize: 12.0.dp,
-                              color: Colors.white
-                          ),
+                      child: Text('${widget.terms_cons.toString()}',
+                        //overflow: TextOverflow.visible,
+                        style: TextStyle(
+                            //fontWeight: FontWeight.bold,
+                            fontSize: 12.0.dp,
+                            color: Colors.white
                         ),
                       ),),
                     SizedBox(
@@ -155,9 +182,14 @@ class _BuyPlanState extends State<BuyPlan> {
                     ),
                     Container(
                       height: 7.h,width: 70.w,
+                      margin: EdgeInsets.only(left: 15.0.w),
                       //color: Color(0xffd41012),
                       child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          setState(() {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Paymnt()));
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xffd41012),
                             shape: RoundedRectangleBorder(
