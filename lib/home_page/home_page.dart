@@ -610,12 +610,12 @@ class _HomePageState extends State<HomePage> {
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
         print(isTokenExpired);
 
-        print('From getapi: ${accessToken}');
-        print('From getapi: ${get_response.statusCode}');
+        // print('From getapi: ${accessToken}');
+        // print('From getapi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {
           get_responcebody = await json.decode(get_response.body);
-          print('Response: $get_responcebody');
+          //print('Response: $get_responcebody');
         }
         else if(isTokenExpired)  {
           refreshtoken();

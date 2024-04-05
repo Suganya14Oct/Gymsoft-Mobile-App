@@ -91,6 +91,12 @@ flutter:
       - assets/clock.png
       - assets/item.png
       - assets/attendance.png
+      - assets/edit_profile.png
+      - assets/change_password.png
+      - assets/logout.png
+      - assets/delete_accnt.png
+      - assets/about_us.png
+      - assets/privacy_policy.png
       - assets/planning.png
 
   # To add assets to your application, add an assets section, like this:

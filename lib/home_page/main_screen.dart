@@ -4,7 +4,7 @@ import 'package:gymsoft/controller/mainscreen_provider.dart';
 import 'package:gymsoft/home_page/diet.dart';
 import 'package:gymsoft/home_page/home_page.dart';
 import 'package:gymsoft/profile/profile.dart';
-import 'package:gymsoft/home_page/settings.dart';
+import 'package:gymsoft/settings/settings.dart';
 import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/shared/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';

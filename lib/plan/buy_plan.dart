@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 class BuyPlan extends StatefulWidget {
-  const BuyPlan({super.key});
+
+  String? description;
+
+  BuyPlan({super.key, required this.description});
 
   @override
   State<BuyPlan> createState() => _BuyPlanState();
@@ -77,7 +80,7 @@ class _BuyPlanState extends State<BuyPlan> {
                       padding: EdgeInsets.all(20.0),
                       //color: Colors.amber,
                       child: FittedBox(
-                        child: Text('30-Days Arms With Abel Albonetti',
+                        child: Text('${widget.description.toString()}',
                             overflow: TextOverflow.visible,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
