@@ -135,6 +135,7 @@ class _PlanState extends State<Plan> {
                                       description: get_responcebody[index]['description'],
                                       img: get_responcebody[index]['image'],
                                       terms_cons: get_responcebody[index]['terms_and_conditions'],
+                                       id: get_responcebody[index]['id'],
                                        features: get_responcebody[index]['features'],
                                     )));
                                   });
@@ -270,11 +271,11 @@ class _PlanState extends State<Plan> {
         print(isTokenExpired);
 
         // print('From getapi: ${accessToken}');
-        print('From PlanApi: ${get_response.statusCode}');
+        //print('From PlanApi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {
           get_responcebody = await json.decode(get_response.body);
-          print('Response: $get_responcebody');
+          // print('Response: $get_responcebody');
         }
         else if(isTokenExpired)  {
           refreshtoken();

@@ -190,7 +190,7 @@ class _DietState extends State<Diet> {
                                         onChanged: (value){
                                           setState(() {
                                             breakfast = value!;
-                                            print(breakfast);
+                                            //print(breakfast);
                                           });
                                         },
                                       ),
@@ -294,7 +294,7 @@ class _DietState extends State<Diet> {
                                         onChanged: (value){
                                           setState(() {
                                             lunch = value!;
-                                            print(lunch);
+                                            //print(lunch);
                                           });
                                         },
                                       ),
@@ -398,7 +398,7 @@ class _DietState extends State<Diet> {
                                         onChanged: (value){
                                           setState(() {
                                             dinner = value!;
-                                            print(dinner);
+                                            //print(dinner);
                                           });
                                         },
                                       ),

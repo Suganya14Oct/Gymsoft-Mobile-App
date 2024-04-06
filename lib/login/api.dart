@@ -50,21 +50,6 @@ class Api {
         var access = responcebody!["access"];
         print("Access Token : ${access}");
 
-        //Provider.of<TokenNotifier>(context,listen: true).setAccessToken(responcebody!["access"]);
-
-        // tokenTime = JwtDecoder.getTokenTime(responcebody!["access"]);
-        // print(tokenTime!.inMinutes);
-        //
-        // bool isTokenExpired = JwtDecoder.isExpired(responcebody!["access"]);
-        //
-        // Timer.periodic(Duration(minutes: 5), (timer){
-        //   print('timer function called');
-        //   if(isTokenExpired) {
-        //     print("Token Expired function implemented");
-        //      refreshtoken();
-        //   }
-        // });
-
         print("Login successfully");
         print(response.statusCode);
       }
@@ -99,11 +84,6 @@ class Api {
       print(e.toString());
     }
   }
-
-  // Future<void> _updateAccessToken(String newToken) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('accessToken', newToken);
-  // }
 
 
 

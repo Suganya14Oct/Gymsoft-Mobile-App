@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -7,9 +8,12 @@ import 'package:gymsoft/home_page/main_screen.dart';
 import 'package:gymsoft/plan/plan.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class Paymnt extends StatefulWidget {
-  const Paymnt({super.key});
+
+   int? id;
+   Paymnt({super.key, required this.id});
 
   @override
   State<Paymnt> createState() => _PaymntState();
@@ -21,6 +25,19 @@ class _PaymntState extends State<Paymnt> {
 
   final _formkey = GlobalKey<FormState>();
   final _UpiController = TextEditingController();
+
+  String? pending = 'pending';
+
+  @override
+  void dispose(){
+
+    _UpiController.dispose();
+    super.dispose();
+
+  }
+
+  var responce;
+  var responcebody;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +240,11 @@ class _PaymntState extends State<Paymnt> {
                             ),
                             onPressed: () {
                               setState(() {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                                print('submit button: ${widget.id}');
+                                print('upi: ${_UpiController.text.toString()}');
+                                print('selectedImage: ${_selectedImage}');
+                                print(pending);
+                                paymentApi(widget.id,_UpiController.text.toString(),_selectedImage,'pending',context);
                               });
                             },
                             child: Text("Submit",style: TextStyle(fontSize: 15.0.dp,color: Colors.white)),),
@@ -246,5 +267,32 @@ class _PaymntState extends State<Paymnt> {
       _selectedImage = File(returnedImage.path);
     });
   }
+
+  Future<void> paymentApi(int? id, String? upi_id, screenshot, status, BuildContext context) async {
+    try{
+      responce = await http. post(
+          Uri.parse('https://achujozef.pythonanywhere.com/api/payments/create/'),
+          body:  {
+            "gym_plan": id.toString(),
+            "transaction_id": upi_id.toString(),
+            "screenshot": screenshot.toString(),
+            "status": status.toString()
+          }
+      );
+
+      print('from paymentApi: ${responce.statusCode}');
+
+      if(responce.statusCode == 200){
+        responcebody = json.decode(responce.body);
+        print(responcebody);
+        print('Upi: ${_UpiController.text.toString()}');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+      }
+
+    }catch (e){
+      print(e.toString());
+    }
+  }
+
 }
 

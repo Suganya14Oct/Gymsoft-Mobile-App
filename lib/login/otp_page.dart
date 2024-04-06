@@ -203,7 +203,7 @@ class _OtpPageState extends State<OtpPage> {
 
   Future<void> ResendApi(String phone) async {
     try{
-      responce = await http. post(
+      responce = await http.post(
           Uri.parse('https://achujozef.pythonanywhere.com/api/send_otp/'),
           body:  {
             "phonenumber": widget.user!.phone.toString(),

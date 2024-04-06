@@ -8,12 +8,14 @@ class BuyPlan extends StatefulWidget {
   String? description;
   String? img;
   String? terms_cons;
+  int? id;
   List? features;
 
   BuyPlan({super.key,
     required this.description,
     required this.img,
     required this.terms_cons,
+    required this.id,
     required this.features
   });
 
@@ -23,19 +25,10 @@ class BuyPlan extends StatefulWidget {
 
 class _BuyPlanState extends State<BuyPlan> {
 
-  var accessToken;
-
-  var get_response;
-
-  var get_responcebody;
-
-  var refresh_response;
-
-  var Token;
 
   @override
   void initState() {
-    print('from features: ${widget.features.toString()}');
+    print('from features: ${widget.id}');
     super.initState();
   }
 
@@ -187,7 +180,7 @@ class _BuyPlanState extends State<BuyPlan> {
                       child: ElevatedButton(
                         onPressed: (){
                           setState(() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Paymnt()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Paymnt(id: widget.id,)));
                           });
                         },
                         style: ElevatedButton.styleFrom(
