@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
+import 'package:gymsoft/home_page/main_screen.dart';
+import 'package:gymsoft/settings/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
@@ -48,6 +50,7 @@ class _SettingsState extends State<Settings> {
                               onTap: () {
                                 setState(() {
                                   print('Navigating');
+                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                                   mainScreenNotifier.pageIndex = 0;
                                 });
                               },
@@ -120,11 +123,18 @@ class _SettingsState extends State<Settings> {
                                       fontFamily: 'Telex',fontSize: 15.5.dp,fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.start,),
                               ),
-                              Container(
-                                  height: 4.h,
-                                  width: 20.w,
-                                  //color: Colors.black,
-                                  child: Icon(Icons.arrow_forward_ios,color: Colors.white,)
+                              InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword()));
+                                  });
+                                },
+                                child: Container(
+                                    height: 4.h,
+                                    width: 20.w,
+                                    //color: Colors.black,
+                                    child: Icon(Icons.arrow_forward_ios,color: Colors.white,)
+                                ),
                               ),
                             ],
                           ),

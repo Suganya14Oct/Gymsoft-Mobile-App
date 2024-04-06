@@ -181,9 +181,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   ),
                                   validator: (value){
                                     if(value == null || value.isEmpty){
-                                      return "Please enter your Name";
-                                    }else if(value.length < 4){
-                                      return "Enter atleast 4 letters";
+                                      return "Please enter you Thoughts";
                                     }return null;
                                   }
                               ),

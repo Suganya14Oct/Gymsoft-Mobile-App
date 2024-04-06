@@ -287,6 +287,7 @@ class _EditProfileState extends State<EditProfile> {
                                         //color: Colors.blueGrey,
                                         alignment: Alignment.center,
                                         child: TextFormField(
+                                            enableInteractiveSelection: false,
                                             onTap: (){
                                               setState(() {
 
@@ -312,11 +313,6 @@ class _EditProfileState extends State<EditProfile> {
                                                   borderRadius: BorderRadius.circular(15.0)
                                               ),
                                               prefixIcon: Icon(Icons.person, color: Colors.white,),
-
-                                              label: Text('',style: TextStyle(
-                                                  color:Colors.white70,fontSize: 15.0.dp
-                                              ),
-                                              ),
                                             ),
                                             validator: (value){
                                               if(value == null || value.isEmpty){
@@ -333,6 +329,7 @@ class _EditProfileState extends State<EditProfile> {
                                         //color: Colors.blueGrey,
                                         alignment: Alignment.center,
                                         child: TextFormField(
+                                            enableInteractiveSelection: false,
                                             style: TextStyle(
                                                 color: Colors.white70,fontFamily: 'Telex',fontSize: 14.5.dp
                                             ),
@@ -391,6 +388,7 @@ class _EditProfileState extends State<EditProfile> {
                                                       child: Icon(Icons.edit,color: Colors.white,size: 10.0.dp,)),
                                                 ),
                                                 TextFormField(
+                                                  enableInteractiveSelection: false,
                                                   style: TextStyle(
                                                       color: Colors.white70,fontFamily: 'Telex',fontSize: 10.0.dp
                                                   ),
@@ -442,6 +440,7 @@ class _EditProfileState extends State<EditProfile> {
                                                       child: Icon(Icons.edit,color: Colors.white,size: 10.0.dp,)),
                                                 ),
                                                 TextFormField(
+                                                  enableInteractiveSelection: false,
                                                   keyboardType: TextInputType.number,
                                                   style: TextStyle(
                                                       color: Colors.white70,fontFamily: 'Telex',fontSize: 9.0.dp
