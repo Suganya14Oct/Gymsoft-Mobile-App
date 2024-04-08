@@ -14,7 +14,7 @@ class MainScreen extends StatefulWidget {
 
   final token;
 
-  const MainScreen({@required this.token,super.key});
+  MainScreen({@required this.token,super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -41,9 +41,6 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  // List<Widget> pageList = [
-  //   HomePage(token: widget.token,),Diet(),Settings(),Profile()
-  // ];
 
   String? accessToken;
 

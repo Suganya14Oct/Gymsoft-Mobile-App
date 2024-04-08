@@ -39,8 +39,8 @@ class _ProfileState extends State<Profile> {
   double minValue = 0.0;
   double maxValue = 100.0;
 
-   double? currentWeight;
-   double? initialWeight;
+  double? currentWeight;
+  double? initialWeight;
 
 
   @override
@@ -178,13 +178,13 @@ class _ProfileState extends State<Profile> {
                                   height: 100,
                                   width: 100,
                                   child: InkWell(
-                                    onTap: (){
-                                      setState(() {
-                                        print('from profile');
-                                        print(currentWeight!);
-                                        print(initialWeight!);
-                                      });
-                                    },
+                                      onTap: (){
+                                        setState(() {
+                                          print('from profile');
+                                          print(currentWeight!);
+                                          print(initialWeight!);
+                                        });
+                                      },
                                       child: CircleAvatar(
                                           child: get_responcebody != null ? ClipOval(
                                               child:
@@ -200,17 +200,17 @@ class _ProfileState extends State<Profile> {
                                   child: FittedBox(
                                     fit: BoxFit.fitWidth,
                                     child: Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                       child: get_responcebody != null
+                                        padding: EdgeInsets.only(right: 8.0),
+                                        child: get_responcebody != null
                                             ? Text('${get_responcebody!['first_name']} ${get_responcebody!['last_name']}',
-                                                overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,
-                                           style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 30.0.dp))
+                                            overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,
+                                            style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 30.0.dp))
                                             : SizedBox(
                                             height: 2.h,width: 3.w,
                                             child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.dp,))
-                                      ),
                                     ),
                                   ),
+                                ),
                               ],
                             ),
                             SizedBox(height: height * 0.05,),
@@ -221,12 +221,12 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     Icon(Icons.monitor_weight,color: Colors.white,size: 35.dp,),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5.0),
-                                      child: get_responcebody != null
-                                          ? Text('${get_responcebody!['weight']} Kgs', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
-                                          : SizedBox(
-                                          height: 1.h,width: 2.w,
-                                          child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: get_responcebody != null
+                                            ? Text('${get_responcebody!['weight']} Kgs', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
+                                            : SizedBox(
+                                            height: 1.h,width: 2.w,
+                                            child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
                                     )
                                   ],
                                 ),
@@ -234,13 +234,13 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     Icon(Icons.height,color: Colors.white,size: 35.dp,),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5.0),
-                                      child: get_responcebody != null
-                                          ? Text('${get_responcebody!['height']} Cms',
-                                               style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
-                                          : SizedBox(
-                                          height: 1.h,width: 2.w,
-                                          child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: get_responcebody != null
+                                            ? Text('${get_responcebody!['height']} Cms',
+                                            style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
+                                            : SizedBox(
+                                            height: 1.h,width: 2.w,
+                                            child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
                                     )
                                   ],
                                 ),
@@ -248,13 +248,13 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     Icon(Icons.perm_contact_calendar_sharp,color: Colors.white,size: 35.dp,),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5.0),
-                                      child: get_responcebody != null
-                                          ? Text('${get_responcebody!['age']} Yrs',
-                                          style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
-                                          : SizedBox(
-                                          height: 1.h,width: 2.w,
-                                          child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: get_responcebody != null
+                                            ? Text('${get_responcebody!['age']} Yrs',
+                                            style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
+                                            : SizedBox(
+                                            height: 1.h,width: 2.w,
+                                            child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
                                     )
                                   ],
                                 ),
@@ -270,13 +270,13 @@ class _ProfileState extends State<Profile> {
                                           )
                                       ),
                                       child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: get_responcebody != null
-                                            ? Text('${get_responcebody!['days_since_joining']}',
-                                            style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
-                                            : SizedBox(
-                                            height: 1.h,width: 2.w,
-                                            child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
+                                          fit: BoxFit.scaleDown,
+                                          child: get_responcebody != null
+                                              ? Text('${get_responcebody!['days_since_joining']}',
+                                              style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 11.0.dp))
+                                              : SizedBox(
+                                              height: 1.h,width: 2.w,
+                                              child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,))
                                       ),
                                     ),
                                     Padding(
@@ -299,14 +299,14 @@ class _ProfileState extends State<Profile> {
                         alignment: Alignment.center,
                         child: Text('Your Progress',style: TextStyle(color: Colors.white,fontSize: 25.dp),),
                       ),
-                    get_responcebody != null ? Container(
+                      get_responcebody != null ? Container(
                         height: height * 0.3,
                         width: width * 0.7,
                         //color: Colors.white70,
                         child:  (currentWeight != null && initialWeight != null)
                             ? SfRadialGauge(
                           //backgroundColor: Colors.white10,
-                              axes: [
+                          axes: [
                             RadialAxis(
                               // minimum: get_responcebody != null
                               //     ? '${get_responcebody!['initial_weight']}'
@@ -316,12 +316,12 @@ class _ProfileState extends State<Profile> {
                               // startAngle: 180,
                               // endAngle: 360,
                               axisLineStyle: AxisLineStyle(
-                                thicknessUnit: GaugeSizeUnit.factor,thickness: 0.03
+                                  thicknessUnit: GaugeSizeUnit.factor,thickness: 0.03
                               ),
                               minorTickStyle: MinorTickStyle(length: 3,thickness: 3,color: Colors.white),
                               majorTickStyle: MajorTickStyle(length: 6,thickness: 4,color: Colors.white),
                               axisLabelStyle:GaugeTextStyle(
-                                color: Colors.white,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12),
                               useRangeColorForAxis: true,
@@ -380,9 +380,9 @@ class _ProfileState extends State<Profile> {
                           ],
                         ) : CircularProgressIndicator(),
                       ) :
-                    SizedBox(
-                        height: 2.h,width: 4.w,
-                        child: Center(child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,)))
+                      SizedBox(
+                          height: 2.h,width: 4.w,
+                          child: Center(child: CircularProgressIndicator(color: Colors.white,strokeWidth: 1.dp,)))
                     ],
                   ),
                 ),
@@ -466,7 +466,7 @@ class _ProfileState extends State<Profile> {
         print(isTokenExpired);
 
         //print('From getapi: ${accessToken}');
-       // print('From getapi: ${get_response.statusCode}');
+        // print('From getapi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {
           get_responcebody = await json.decode(get_response.body);

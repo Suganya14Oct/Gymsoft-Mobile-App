@@ -228,13 +228,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                          ),
                                          onPressed: () async{
                                            if(_formkey.currentState!.validate()) {
-                                   
                                              try{
                                                await _api.loginApi(_phoneController.text.toString(), _passwordController.text.toString(), context);
                                              }catch (e) {
                                                print('Login Error: $e');
                                              }
-                                   
+
                                            }else{
                                              setState(() {
                                                print("Error");

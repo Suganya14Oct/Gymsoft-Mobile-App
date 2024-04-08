@@ -102,7 +102,7 @@ class _EditProfileState extends State<EditProfile> {
     //ProfileController profileController = Get.put(ProfileController(profilemodel: profilemodel!));
 
     return Consumer<MainScreenNotifier>(builder: (context, mainScreenNotifier, child){
-     return Scaffold(
+      return Scaffold(
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: Stack(
@@ -142,14 +142,14 @@ class _EditProfileState extends State<EditProfile> {
                                 children: [
                                   InkWell(
                                     onTap : () async {
-                                        print('print');
-                                        final  sharedPreferences = await SharedPreferences.getInstance();
-                                        var ObtainedaccesstToken= sharedPreferences.getString('accessToken');
-                                        setState(() {
-                                          accesstoken = ObtainedaccesstToken;
-                                          print('splash Screen : $accesstoken');
-                                        });
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(token: '$accesstoken')));
+                                      print('print');
+                                      final  sharedPreferences = await SharedPreferences.getInstance();
+                                      var ObtainedaccesstToken= sharedPreferences.getString('accessToken');
+                                      setState(() {
+                                        accesstoken = ObtainedaccesstToken;
+                                        print('splash Screen : $accesstoken');
+                                      });
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(token: '$accesstoken')));
                                     },
                                     child: Container(
                                         alignment: Alignment.centerRight,
@@ -160,11 +160,11 @@ class _EditProfileState extends State<EditProfile> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: (){
-                                      setState(() {
-                                        //print(profileController.weight);
-                                      });
-                                    },
+                                      onTap: (){
+                                        setState(() {
+                                          //print(profileController.weight);
+                                        });
+                                      },
                                       child: Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 25.dp ),))
                                 ],
                               ),
@@ -175,7 +175,7 @@ class _EditProfileState extends State<EditProfile> {
                                     height: 105,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                       // color: _selectedImage == null ? Colors.lightBlueAccent : Colors.transparent,
+                                      // color: _selectedImage == null ? Colors.lightBlueAccent : Colors.transparent,
                                         borderRadius: BorderRadius.circular(100)
                                       //more than 50% of width makes circle
                                     ),
@@ -188,8 +188,8 @@ class _EditProfileState extends State<EditProfile> {
                                             backgroundImage: FileImage(_selectedImage!)
                                         ) : CircleAvatar(
                                           //backgroundColor: Colors.blueGrey,
-                                            radius: 100.0,
-                                            backgroundImage: NetworkImage(p_image),
+                                          radius: 100.0,
+                                          backgroundImage: NetworkImage(p_image),
                                         ),
                                         Positioned(
                                             height: 150,left: 10.0,top: 10.0,
@@ -428,7 +428,7 @@ class _EditProfileState extends State<EditProfile> {
                                           child: Container(
                                             height: 20.dp,
                                             width: 55.dp,
-                                             //color: Colors.blueGrey,
+                                            //color: Colors.blueGrey,
                                             alignment: Alignment.center,
                                             child: Stack(
                                               children: [
@@ -596,15 +596,15 @@ class _EditProfileState extends State<EditProfile> {
           //'Accept': 'application/json'
         });
 
-          put_response.fields['weight'] = _weightController.text.toString();
+        put_response.fields['weight'] = _weightController.text.toString();
 
-          put_response.fields['height'] = _heightController.text.toString();
+        put_response.fields['height'] = _heightController.text.toString();
 
-          put_response.fields['first_name'] = _firstnameController.text.toString();
+        put_response.fields['first_name'] = _firstnameController.text.toString();
 
-          put_response.fields['last_name'] = _secondnameController.text.toString();
+        put_response.fields['last_name'] = _secondnameController.text.toString();
 
-         // put_response.fields['age'] = _ageController.text.toString();
+        // put_response.fields['age'] = _ageController.text.toString();
 
         if(_selectedImage != null){
           put_response.files.add(await http.MultipartFile.fromPath('profile_picture', _selectedImage!.path));

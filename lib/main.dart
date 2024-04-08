@@ -22,6 +22,7 @@ void main() {
     MultiProvider(
       providers: [
       ChangeNotifierProvider(create: (_) => MainScreenNotifier()),
+        //ChangeNotifierProvider(create: (_) => Api()),
     ],
       child: const MyApp(),
     )

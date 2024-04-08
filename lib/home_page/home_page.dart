@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
+import 'package:gymsoft/attendance/attendance.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
 import 'package:gymsoft/equipments/equipments.dart';
 import 'package:gymsoft/feedback/feedback.dart';
@@ -131,8 +132,8 @@ class _HomePageState extends State<HomePage> {
                       InkWell(
                         onTap: (){
                           setState(() {
-                            _api.logout();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                            // _api.logout();
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           });
                         },
                         child: Container(
@@ -363,12 +364,7 @@ class _HomePageState extends State<HomePage> {
                                       InkWell(
                                         onTap : (){
                                           setState(() {
-                                            print('s');
-                                           // print(accessToken);
-                                            // print(refreshtoken());
-                                            getApi();
-                                            print(get_responcebody!['latest_weight']);
-                                            print(get_responcebody!['user_goal']);
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Attendance()));
                                           });
                                         },
                                         child: Container(
