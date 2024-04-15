@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:intl/intl.dart';
 
 class SlotBooking extends StatefulWidget {
   const SlotBooking({super.key});
@@ -33,6 +34,8 @@ class _SlotBookingState extends State<SlotBooking> {
 
   late List<bool> isSelected;
 
+  int selectedIndex = -1;
+
   final List<String> available_slots = [
     '11am - 12pm',
     '12pm - 1pm',
@@ -43,6 +46,8 @@ class _SlotBookingState extends State<SlotBooking> {
     '8pm - 9pm',
     '9pm - 10pm',
   ];
+
+  String formattedDate = DateFormat('dd/MM/yyyy', 'en_US').format(DateTime.now());
 
   @override
   void initState() {
@@ -109,7 +114,7 @@ class _SlotBookingState extends State<SlotBooking> {
                       height: 5.h,
                       width: width,
                       margin: EdgeInsets.only(top: 4.0.h),
-                      padding: EdgeInsets.only(left: 30.0),
+                      padding: EdgeInsets.only(left: 20.0),
                       //color: Colors.amber,
                       child: Text('Total Number of Slots',
                         style: TextStyle(color: Colors.white,
@@ -119,7 +124,7 @@ class _SlotBookingState extends State<SlotBooking> {
                     Container(
                       height: 40.0.h,
                       width: width,
-                      color: Colors.black45,
+                      //color: Colors.black45,
                       child: GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
@@ -146,13 +151,14 @@ class _SlotBookingState extends State<SlotBooking> {
                           }),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           height: 5.h,
-                          width: 50.w,
+                          width: 40.w,
                           margin: EdgeInsets.only(top: 4.0.h),
-                          padding: EdgeInsets.only(left: 30.0),
+                          padding: EdgeInsets.only(left: 10.0),
                           //color: Colors.amber,
                           child: Text('Available Slots',
                             style: TextStyle(color: Colors.white,
@@ -161,10 +167,10 @@ class _SlotBookingState extends State<SlotBooking> {
                         ),
                         Container(
                           height: 5.h,
-                          width: 50.w,
+                          width: 60.w,
                           margin: EdgeInsets.only(top: 4.0.h),
                           padding: EdgeInsets.only(left: 30.0),
-                          //color: Colors.amber,
+                         // color: Colors.amber,
                           child: Text('Click to Select Your Slot',
                             style: TextStyle(color: Colors.white,
                                 fontFamily: 'Telex',fontSize: 14.0.dp),
@@ -189,8 +195,21 @@ class _SlotBookingState extends State<SlotBooking> {
                             return InkWell(
                               onTap: (){
                                 setState(() {
-                                  isSelected[index] = !isSelected[index];
+                                  //isSelected[index] = !isSelected[index];
                                   _scrollToIndex(index);
+
+                                  if(selectedIndex != -1){
+                                    setState(() {
+                                      selectedIndex = -1;
+                                    });
+                                  }else{
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  }
+
+                                  print('Selected index: $selectedIndex');
+
                                 });
                               },
                               child: Container(
@@ -198,7 +217,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                 height: 2.0.h,
                                 //color: Colors.white,
                                 decoration: BoxDecoration(
-                                  color: isSelected[index] ? Colors.black : Colors.white,
+                                  color: selectedIndex == index ? Colors.black : Colors.white,
                                   // border: Border.all(color: Colors.white),
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
@@ -206,7 +225,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                   child: FittedBox(
                                       child: Text(available_slots[index],
                                         style: TextStyle(
-                                          color: isSelected[index] ? Colors.black : Colors.white,
+                                          color: selectedIndex == index ? Colors.white : Colors.black,
                                         ),)),
                                 ),
                               ),
@@ -225,6 +244,91 @@ class _SlotBookingState extends State<SlotBooking> {
                       child: ElevatedButton(
                         onPressed: (){
                           setState(() {
+                            print(formattedDate);
+                            showDialog(context: context, builder: (BuildContext context){
+                              return AlertDialog(
+                                backgroundColor: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(32.0))
+                                ),
+                                title: Center(
+                                  child: Text('Your slot is booked on', style: TextStyle(
+                                    fontSize: 13.0.dp,
+                                    color: Colors.white,
+                                    fontFamily: 'Telex',
+                                    //fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                content: Container(
+                                    height: 20.h,
+                                    width: 80.w,
+                                    //margin: EdgeInsets.only(left: 30.0.w, top: 2.0.h),
+                                    padding: EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                      border: Border.fromBorderSide(BorderSide(
+                                          color: Colors.white
+                                      )),
+                                      borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text('Date : ${formattedDate}', style: TextStyle(color: Colors.white),),
+                                        Text('Time : ${selectedIndex != -1 ? available_slots[selectedIndex] : 'No slot selected'}', style: TextStyle(color: Colors.white),),
+                                      ],
+                                    )
+                                ),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 6.h,
+                                        width: 27.w,
+                                        child: TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xffd41012)), // Set the background color here
+                                            ),
+                                            onPressed: (){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  shape: BeveledRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10.0)
+                                                  ),
+                                                  backgroundColor: Colors.white70,
+                                                    content: Text('You will be Notified',style: TextStyle(color: Colors.black),),
+                                                  duration: Duration(seconds: 2),
+                                                )
+                                              );
+                                              Navigator.pop(context);
+                                            }, child: Text('Notify Me',
+                                          style: TextStyle(color: Colors.white,
+                                              fontFamily: 'Telex',
+                                              //fontWeight: FontWeight.bold
+                                          ),)),
+                                      ),
+                                      Container(
+                                        height: 6.h,
+                                        width: 27.w,
+                                        child: TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white70), // Set the background color here
+                                            ),
+                                            onPressed: (){
+                                              setState(() {
+                                                Navigator.pop(context);
+                                              });
+                                            }, child: Text('Okay',
+                                          style: TextStyle(color: Colors.black,fontFamily: 'Telex',
+                                            // fontWeight: FontWeight.bold
+                                          ),)),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -258,6 +362,12 @@ class _SlotBookingState extends State<SlotBooking> {
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
+
+    if(!isSelected[index]){
+      setState(() {
+        isSelected[index] = true;
+      });
+    }
 
 
   }
