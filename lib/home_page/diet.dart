@@ -1,9 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Diet extends StatefulWidget {
   const Diet({super.key});
@@ -17,6 +23,64 @@ class _DietState extends State<Diet> {
   bool breakfast = false;
   bool lunch = false;
   bool dinner = false;
+
+  var accessToken;
+
+  var get_response;
+
+  var get_responcebody;
+
+  var refresh_response;
+
+  var Token;
+
+
+  @override
+  void initState() {
+    setState(() {
+      //_isMounted = true;
+      print('fetchData() function called from iniState');
+      fetchData();
+
+
+    });
+    super.initState();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      var data = await getApi();
+
+      if (data != null && data.isNull && mounted) {
+        setState(() {
+          get_responcebody = data;
+        });
+      } else  {
+        if(mounted){
+          setState((){
+            retryFetchData();
+          });
+        }
+      }
+    } catch (e) {
+      print('Exception: $e');
+      if(mounted){
+        setState(() {
+          retryFetchData();
+        });
+      }
+    }
+  }
+
+  void retryFetchData() async {
+
+    const retryDelay = Duration(seconds: 1);
+    Timer(retryDelay, () {
+      if(mounted){
+        fetchData();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -421,4 +485,76 @@ class _DietState extends State<Diet> {
         }
     );
   }
+
+  Future<bool> refreshtoken() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? refreshToken = prefs.getString('refreshToken');
+
+    //print('in refreshToken function: $refreshToken');
+
+    if(refreshToken != null){
+      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
+          body: {'refresh' : refreshToken});
+      print('Inside refreshToken Function ${refresh_response.statusCode}');
+      if(refresh_response.statusCode == 200){
+        final responnsebody = json.decode(refresh_response.body);
+        print(responnsebody);
+        Token = responnsebody['access'];
+        print(Token);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        accessToken = prefs.setString('accessToken', Token);
+        return true;
+      }else{
+        print('failed');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  getApi() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('accessToken');
+
+    try {
+
+      if(accessToken != null){
+        get_response = await http.get(
+          Uri.parse('https://achujozef.pythonanywhere.com/api/gym-diets/'),
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        );
+
+        bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
+        print(isTokenExpired);
+
+        // print('From getapi: ${accessToken}');
+        print('From PlanApi: ${get_response.statusCode}');
+
+        if (get_response.statusCode == 200) {
+          setState(() {
+            get_responcebody = List<Map<String, dynamic>>.from(json.decode(get_response.body));
+          });
+          // get_responcebody = await json.decode(get_response.body);
+         //print('Response: $get_responcebody');
+         print('Response: ${get_responcebody[0]['days'][0]['day']}');
+          print('Response: ${get_responcebody[0]['days'][0]['timings']}');
+        }
+        else if(isTokenExpired)  {
+          refreshtoken();
+          getApi();
+          print(accessToken);
+          print('Error: ${get_response.statusCode}');
+        }
+      }
+    } catch (e) {
+      // Handle exceptions or network errors
+      print('Exception: $e');
+    }
+  }
+
 }

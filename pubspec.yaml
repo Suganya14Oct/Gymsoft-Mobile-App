@@ -51,6 +51,7 @@ dependencies:
   flutter_emoji_feedback:
   flutter_rating_bar:
   intl:
+  flutter_local_notifications:
   qr_code_scanner:
 
 dev_dependencies:

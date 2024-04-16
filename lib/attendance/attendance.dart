@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gymsoft/attendance/add_attendance.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Attendance extends StatefulWidget {
   const Attendance({super.key});
@@ -20,6 +22,8 @@ class _AttendanceState extends State<Attendance> {
   bool showScanner = false;
   bool scannedAndNavigated = false;
   bool cooldown = false;
+  var responce;
+  var responcebody;
 
   @override
   void reassemble() {
@@ -159,6 +163,9 @@ class _AttendanceState extends State<Attendance> {
       ),
     );
   }
+
+  
+
   void _onQRViewCreated(QRViewController controller) {
 
     scannedAndNavigated = false;

@@ -28,6 +28,9 @@ class _PaymntState extends State<Paymnt> {
 
   String? pending = 'pending';
 
+  String? fileExtension;
+
+
   @override
   void dispose(){
 
@@ -221,8 +224,6 @@ class _PaymntState extends State<Paymnt> {
                               validator: (value){
                                 if(value == null || value.isEmpty){
                                   return "Please enter your phone number";
-                                }else if(value.length < 10){
-                                  return "Check your number";
                                 }return null;
                               }
                           ),
@@ -260,11 +261,23 @@ class _PaymntState extends State<Paymnt> {
     );
   }
   Future _pickImageFromGallery() async{
+
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if(returnedImage == null) return;
+
+    final List<String> imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+     fileExtension = returnedImage.path.split('.').last.toLowerCase();
+
+    if (!imageExtensions.contains(fileExtension)) {
+     print("It is not an image File");
+      return;
+    }
+
     setState(() {
       _selectedImage = File(returnedImage.path);
+      print(returnedImage);
+
     });
   }
 
@@ -282,7 +295,7 @@ class _PaymntState extends State<Paymnt> {
 
       print('from paymentApi: ${responce.statusCode}');
 
-      if(responce.statusCode == 200){
+      if(responce.statusCode == 201){
         responcebody = json.decode(responce.body);
         print(responcebody);
         print('Upi: ${_UpiController.text.toString()}');
