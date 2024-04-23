@@ -97,7 +97,7 @@ class _EquipmentsState extends State<Equipments> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/gym_female.jpg"),fit: BoxFit.cover
+                          image: AssetImage("assets/female_bg.jpg"),fit: BoxFit.cover
                       )
                   ),
                 ),

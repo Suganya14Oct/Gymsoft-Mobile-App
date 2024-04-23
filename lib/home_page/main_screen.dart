@@ -50,13 +50,6 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
-  // Future<void> _loadToken() async{
-  //   final prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     print('data from splash Screen : ${widget.token}');
-  //     accessToken = prefs.getString('accessToken');
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

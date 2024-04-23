@@ -100,6 +100,7 @@ flutter:
       - assets/delete_accnt.png
       - assets/about_us.png
       - assets/privacy_policy.png
+      - assets/female_bg.jpg
       - assets/planning.png
 
   # To add assets to your application, add an assets section, like this:

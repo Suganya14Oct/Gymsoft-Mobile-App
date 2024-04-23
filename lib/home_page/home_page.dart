@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("assets/gym_female.jpg"),fit: BoxFit.cover
+                              image: AssetImage("assets/male_background.jpeg"),fit: BoxFit.cover
                           )
                       ),
                     ),
@@ -199,11 +199,12 @@ class _HomePageState extends State<HomePage> {
                           height: 25.h,
                           width: width.w,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: 10.0,left: 25.0,right: 10.0),
-                                height: 50.h,
-                                width: width * 0.08.w,
+                                margin: EdgeInsets.only(top: 40.0,left: 25.0,right: 10.0),
+                                height: 40.h,
+                                width: width * 0.09.w,
                                 decoration: BoxDecoration(
                                     color: Colors.black54,
                                     border: Border.all(
@@ -211,145 +212,80 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     borderRadius: BorderRadius.all(Radius.circular(20.0))
                                 ),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 3.7.h,
-                                            width: 4.4.w,
-                                            margin: EdgeInsets.only(top: 15.0,left: 10.0,right: 5.0),
-                                            child: Image.asset("assets/finish.png"),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 15.0),
-                                            child: Text("Finished",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
-                                          )
-                                        ],
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(top: 27.0),
-                                          //child: Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 0.0),
+                                        //child: Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                        child: get_responcebody != null
+                                            ? Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                            : SizedBox(
+                                            height: 2.h,width: 4.w,
+                                            child: CircularProgressIndicator(color: Colors.white,))
+                                    ),
+                                    Text('Completed\n      Days',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),)
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 40.h,
+                                width: width * 0.09.w,
+                                margin: EdgeInsets.only(top: 40.0,left: 10.0,right: 25.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    border: Border.all(
+                                        color: Colors.white24
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 3.7.h,
+                                          width: 4.4.w,
+                                          margin: EdgeInsets.only(top: 8.0,left: 10.0,right: 5.0),
+                                          child: Image.asset("assets/inprogress.png"),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 8.0),
+                                          child: Text("Your Progress",
+                                            style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 11.0.dp),),
+                                        )
+                                      ],
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(right: 10.0,left: 15.0),
                                           child: get_responcebody != null
-                                              ? Text('${get_responcebody!['days_since_joined']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 32.0.dp))
+                                              ? Text('${get_responcebody!['user_goal']}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 14.0.dp))
                                               : SizedBox(
                                               height: 2.h,width: 4.w,
                                               child: CircularProgressIndicator(color: Colors.white,))
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 23.0),
-                                        child: Text('Completed\n      Days',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
-                                      )
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    height: 11.h,
-                                    width: width * 0.13.w,
-                                    margin: EdgeInsets.only(top: 12.0, right: 10.0,left: 13.0),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black54,
-                                        border: Border.all(
-                                            color: Colors.white24
-                                        ),
-                                        borderRadius: BorderRadius.all(Radius.circular(20.0))
-                                    ),
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: 3.6.h,
-                                                width: 4.4.w,
-                                                margin: EdgeInsets.only(top: 7.0,left: 25.0,right: 5.0),
-                                                child: Image.asset("assets/inprogress.png"),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.only(top: 8.0),
-                                                child: Text("Current Weight",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 15.0.dp),),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Padding(
-                                                  padding: EdgeInsets.only(left: 50.0),
-                                                  child: get_responcebody != null
-                                                      ? FittedBox(child: Text('${get_responcebody!['latest_weight']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 28.0.dp)))
-                                                      : SizedBox(
-                                                      height: 2.h,width: 4.w,
-                                                      child: CircularProgressIndicator(color: Colors.white,))
-                                              ),
-                                              // Padding(
-                                              //   padding: EdgeInsets.only(left: 8.0),
-                                              //   child: Text('workouts',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 11.0.dp),),
-                                              // )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 10.h,
-                                    width: width * 0.13.w,
-                                    margin: EdgeInsets.only(top: 15.0, right: 10.0,left: 13.0),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black54,
-                                        border: Border.all(
-                                            color: Colors.white24
-                                        ),
-                                        borderRadius: BorderRadius.all(Radius.circular(20.0))
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 3.7.h,
-                                              width: 4.4.w,
-                                              margin: EdgeInsets.only(top: 8.0,left: 35.0,right: 5.0),
-                                              child: Image.asset("assets/check.png"),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 8.0),
-                                              child: Text("Your Progress",style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 11.0.dp),),
-                                            )
-                                          ],
-                                        ),
-                                        Flexible(
-                                          flex: 2,
-                                          child: FittedBox(
-                                            //fit: BoxFit.fill,
-                                            child: Padding(
-                                                padding: EdgeInsets.only(right: 8.0,left: 8.0),
-                                                child: get_responcebody != null
-                                                    ? Text('${get_responcebody!['user_goal']}', style: TextStyle(color: Colors.white, fontFamily: 'Telex', fontSize: 28.0.dp))
-                                                    : SizedBox(
-                                                    height: 2.h,width: 4.w,
-                                                    child: CircularProgressIndicator(color: Colors.white,))
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
                               )
                             ],
                           ),
                         ),
+                        SizedBox(height: 3.5.h),
                         Divider(
                           color: Colors.white,
                           indent: 13.0.w,
                           endIndent: 5.0.h,
                           thickness: 0.1.h,
                         ),
+                        SizedBox(height: 3.5.h),
                         Container(
                           height: 63.h,
                           width: width,
@@ -359,9 +295,9 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                      height: 15.h,
-                                      width: 30.w,
+                                      margin: EdgeInsets.only(top: 0.0.w,right: 20.0,left: 30.0),
+                                      height: 12.h,
+                                      width: 24.w,
                                       decoration: BoxDecoration(
                                           color: Colors.black54,
                                           border: Border.all(
@@ -378,15 +314,18 @@ class _HomePageState extends State<HomePage> {
                                               });
                                             },
                                             child: Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/attendance.png"),
                                             ),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(top: 10.0),
-                                            child: Text('Attendance',style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 10.0.dp),),
+                                            child: Text('Attendance',
+                                              style: TextStyle(color: Colors.white,
+                                                  fontFamily: 'Telex',
+                                                  fontSize: 10.0.dp),),
                                           )
                                         ],
                                       )
@@ -398,9 +337,9 @@ class _HomePageState extends State<HomePage> {
                                       });
                                     },
                                     child: Container(
-                                        margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                        height: 15.h,
-                                        width: 30.w,
+                                        margin: EdgeInsets.only(top: 0.0.w,right: 20.0,left: 30.0),
+                                        height: 12.h,
+                                        width: 24.w,
                                         decoration: BoxDecoration(
                                             color: Colors.black54,
                                             border: Border.all(
@@ -411,8 +350,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/slot_booking.png"),
                                             ),
@@ -437,8 +376,8 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                        height: 15.h,
-                                        width: 30.w,
+                                        height: 12.h,
+                                        width: 24.w,
                                         decoration: BoxDecoration(
                                             color: Colors.black54,
                                             border: Border.all(
@@ -449,8 +388,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/trainer.png"),
                                             ),
@@ -468,8 +407,8 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                        height: 15.h,
-                                        width: 30.w,
+                                        height: 12.h,
+                                        width: 24.w,
                                         decoration: BoxDecoration(
                                             color: Colors.black54,
                                             border: Border.all(
@@ -480,8 +419,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/gym_equipment.png"),
                                             ),
@@ -506,8 +445,8 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                        height: 15.h,
-                                        width: 30.w,
+                                        height: 12.h,
+                                        width: 24.w,
                                         decoration: BoxDecoration(
                                             color: Colors.black54,
                                             border: Border.all(
@@ -518,8 +457,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/feedback.png"),
                                             ),
@@ -539,8 +478,8 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(top: 5.0.w,right: 20.0,left: 30.0),
-                                        height: 15.h,
-                                        width: 30.w,
+                                        height: 12.h,
+                                        width: 24.w,
                                         decoration: BoxDecoration(
                                             color: Colors.black54,
                                             border: Border.all(
@@ -551,8 +490,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 8.h,
-                                              width: 19.w,
+                                              height: 5.h,
+                                              width: 16.w,
                                               margin: EdgeInsets.only(top: 10.0),
                                               child: Image.asset("assets/planning.png"),
                                             ),

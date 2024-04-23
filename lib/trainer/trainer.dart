@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Trainer extends StatefulWidget {
   const Trainer({super.key});
@@ -19,6 +25,57 @@ class _TrainerState extends State<Trainer> {
   var refresh_response;
 
   var Token;
+
+  @override
+  void initState() {
+    setState(() {
+      //_isMounted = true;
+      print('fetchData() function called from iniState');
+      fetchData();
+    });
+    super.initState();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      var data = await getApi();
+
+      if (data != null && data.isNull && mounted) {
+        setState(() {
+          get_responcebody = data;
+        });
+      } else  {
+        if(mounted){
+          setState((){
+            retryFetchData();
+          });
+        }
+      }
+    } catch (e) {
+      print('Exception: $e');
+      if(mounted){
+        setState(() {
+          retryFetchData();
+        });
+      }
+    }
+  }
+
+  void retryFetchData() async {
+
+    const retryDelay = Duration(seconds: 1);
+    Timer(retryDelay, () {
+      if(mounted){
+        fetchData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    mounted;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +130,8 @@ class _TrainerState extends State<Trainer> {
                     Container(
                       height: 85.0.h,
                       //width: width,
-                      child:  ListView.builder(
-                          itemCount: 5,
+                      child: get_responcebody != null ? ListView.builder(
+                          itemCount: get_responcebody.length,
                           itemBuilder: (BuildContext context, int index){
                             return Stack(
                               children: [
@@ -94,14 +151,15 @@ class _TrainerState extends State<Trainer> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          Flexible(child: Text('Name',style: TextStyle(
+                                          Flexible(child: Text('${get_responcebody[index]['user']['first_name']} ${get_responcebody[index]['user']['last_name']}',
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15.0,
                                               color: Colors.white
                                           ),)),
                                           Flexible(
                                               flex: 5,
-                                              child: Text('Description',style: TextStyle(
+                                              child: Text('${get_responcebody[index]['bio']}',style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 11.0.dp,
                                                   color: Colors.white
@@ -119,7 +177,7 @@ class _TrainerState extends State<Trainer> {
                                         child: CircleAvatar(
                                             child:  ClipOval(
                                                 child:
-                                                Image.network('https://res.cloudinary.com/dkocmifft/image/upload/v1/user_profile_pictures/WhatsApp_Image_2024-02-10_at_19.30.09_33d00ad6_lqme3t',
+                                                Image.network('${get_responcebody[index]['profile_picture']}',
                                                   fit: BoxFit.cover,
                                                   errorBuilder: (context, error, stackTrace){
                                                     print('Error loading image: $error');
@@ -136,7 +194,7 @@ class _TrainerState extends State<Trainer> {
                                 )
                               ],
                             );
-                          }) ,
+                          }) : Center(child: CircularProgressIndicator(color: Colors.white,)),
                     ),
                   ],
                 )
@@ -146,4 +204,72 @@ class _TrainerState extends State<Trainer> {
       ),
     );
   }
+
+  Future<bool> refreshtoken() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? refreshToken = prefs.getString('refreshToken');
+
+    //print('in refreshToken function: $refreshToken');
+
+    if(refreshToken != null){
+      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
+          body: {'refresh' : refreshToken});
+      print('Inside refreshToken Function ${refresh_response.statusCode}');
+      if(refresh_response.statusCode == 200){
+        final responnsebody = json.decode(refresh_response.body);
+        print(responnsebody);
+        Token = responnsebody['access'];
+        print(Token);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        accessToken = prefs.setString('accessToken', Token);
+        return true;
+      }else{
+        print('failed');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  getApi() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('accessToken');
+
+    try {
+
+      if(accessToken != null){
+        get_response = await http.get(
+          Uri.parse('https://achujozef.pythonanywhere.com/api/list-gym-trainers/'),
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        );
+
+        bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
+        print(isTokenExpired);
+
+        // print('From getapi: ${accessToken}');
+        print('From trainerapi: ${get_response.statusCode}');
+
+        if (get_response.statusCode == 200) {
+          get_responcebody = await json.decode(get_response.body);
+          print('Response: $get_responcebody');
+          // print('${get_responcebody[0]['user']['first_name']}');
+        }
+        else if(isTokenExpired)  {
+          refreshtoken();
+          getApi();
+          print(accessToken);
+          print('Error: ${get_response.statusCode}');
+        }
+      }
+    } catch (e) {
+      // Handle exceptions or network errors
+      print('Exception: $e');
+    }
+  }
+
 }

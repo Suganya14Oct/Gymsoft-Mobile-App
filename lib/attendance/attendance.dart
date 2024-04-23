@@ -145,7 +145,7 @@ class _AttendanceState extends State<Attendance> {
                         Container(
                           height: height * 0.4,
                           width: width * 0.7,
-                          color: Colors.brown,
+                         // color: Colors.brown,
                           margin: EdgeInsets.all(10.0),
                           child: Center(
                             child: (result != null) ?

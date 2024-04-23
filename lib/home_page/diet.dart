@@ -28,7 +28,7 @@ class _DietState extends State<Diet> {
 
   var get_response;
 
-  var get_responcebody;
+  List? get_responcebody;
 
   var refresh_response;
 
@@ -244,10 +244,10 @@ class _DietState extends State<Diet> {
                                         checkColor: Colors.black,
                                         focusColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8.0)
+                                            borderRadius: BorderRadius.circular(8.0)
                                         ),
                                         side: BorderSide(
-                                          color: Colors.white
+                                            color: Colors.white
                                         ),
                                         activeColor: Colors.white,
                                         value: breakfast,
@@ -536,13 +536,16 @@ class _DietState extends State<Diet> {
         print('From PlanApi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {
-          setState(() {
-            get_responcebody = List<Map<String, dynamic>>.from(json.decode(get_response.body));
+
+           get_responcebody = await json.decode(get_response.body);
+         // print('Response: $get_responcebody');
+          get_responcebody!.forEach((element) {
+            Map obj = element;
+            String name = obj['name'];
+            List address = obj['days'];
+            var street = address.toList();
+            print(street);
           });
-          // get_responcebody = await json.decode(get_response.body);
-         //print('Response: $get_responcebody');
-         print('Response: ${get_responcebody[0]['days'][0]['day']}');
-          print('Response: ${get_responcebody[0]['days'][0]['timings']}');
         }
         else if(isTokenExpired)  {
           refreshtoken();
