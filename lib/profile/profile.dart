@@ -130,7 +130,7 @@ class _ProfileState extends State<Profile> {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/gym_female.jpg"),fit: BoxFit.cover
+                            image: AssetImage("assets/male_background.jpeg"),fit: BoxFit.cover
                         )
                     ),
                   ),
@@ -190,7 +190,7 @@ class _ProfileState extends State<Profile> {
                                               child:
                                               Image.network('${get_responcebody!['profile_picture']}',fit: BoxFit.cover,)
                                           ) : SizedBox(
-                                              height: 2.h,width: 4.w,
+                                              height: 2.h, width: 4.w,
                                               child: CircularProgressIndicator(color: Colors.black12,)
                                           )
                                       )
@@ -470,7 +470,15 @@ class _ProfileState extends State<Profile> {
 
         if (get_response.statusCode == 200) {
           get_responcebody = await json.decode(get_response.body);
+          Map<String, dynamic>? pro_data = await get_responcebody;
+          //print('pro_data: ${pro_data}');
           //print('Response: $get_responcebody');
+
+          if(pro_data != null){
+             Provider.of<ProfileNotifier>(context, listen: false).setApiData(pro_data);
+             print('pro_data: ${pro_data}');
+          }
+
           setState(() {
             apiData = [
               '${get_responcebody!['weight']}',

@@ -52,6 +52,8 @@ dependencies:
   flutter_rating_bar:
   intl:
   flutter_local_notifications:
+  timezone:
+  rxdart:
   qr_code_scanner:
 
 dev_dependencies:
@@ -93,12 +95,14 @@ flutter:
       - assets/name.png
       - assets/clock.png
       - assets/item.png
+      - assets/diet_small_red.png
       - assets/attendance.png
       - assets/edit_profile.png
       - assets/change_password.png
       - assets/logout.png
       - assets/delete_accnt.png
       - assets/about_us.png
+      - assets/female_blur_bg.jpg
       - assets/privacy_policy.png
       - assets/female_bg.jpg
       - assets/planning.png

@@ -41,6 +41,8 @@ class _HomePageState extends State<HomePage> {
 
   var accessToken;
 
+  var profile_accessToken;
+
   var Token;
 
   var login_response;
@@ -54,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   Map? refresh_responcebody;
 
   Map? get_responcebody;
+
 
   @override
   void initState() {

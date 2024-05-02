@@ -88,7 +88,7 @@ class _PlanState extends State<Plan> {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/gym_female.jpg"),fit: BoxFit.cover
+                        image: AssetImage("assets/male_background.jpeg"),fit: BoxFit.cover
                     )
                 ),
               ),

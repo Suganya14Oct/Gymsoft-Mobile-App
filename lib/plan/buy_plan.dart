@@ -50,7 +50,7 @@ class _BuyPlanState extends State<BuyPlan> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/male_background.jpeg"),fit: BoxFit.cover
+                          image: AssetImage("assets/female_blur_bg.jpg"),fit: BoxFit.cover
                       )
                   ),
                 ),

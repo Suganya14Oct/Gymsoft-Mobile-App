@@ -7,8 +7,10 @@ import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/login/login.dart';
 import 'package:gymsoft/login/splash_screen.dart';
 import 'package:get/get.dart';
+import 'package:gymsoft/notification/local_noti.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 AndroidOptions _getAndroidOptions() => const AndroidOptions(
   encryptedSharedPreferences: true,
@@ -16,13 +18,16 @@ AndroidOptions _getAndroidOptions() => const AndroidOptions(
 
 final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalNoti.init();
 
   runApp(
     MultiProvider(
       providers: [
       ChangeNotifierProvider(create: (_) => MainScreenNotifier()),
-        //ChangeNotifierProvider(create: (_) => Api()),
+        ChangeNotifierProvider(create: (_) => ProfileNotifier())
     ],
       child: const MyApp(),
     )
@@ -35,6 +40,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return FlutterSizer(
       builder: (context, orientation, screenType){
         return GetMaterialApp(

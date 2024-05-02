@@ -47,6 +47,7 @@ class _EditProfileState extends State<EditProfile> {
 
 
   final _formkey = GlobalKey<FormState>();
+
   late TextEditingController _firstnameController;
   late TextEditingController _secondnameController;
   late TextEditingController _ageController;
@@ -114,7 +115,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/male_background.jpeg"),fit: BoxFit.cover
+                            image: AssetImage("assets/female_bg.jpg"),fit: BoxFit.cover
                         )
                     ),
                   ),

@@ -12,3 +12,19 @@ class MainScreenNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+class ProfileNotifier extends ChangeNotifier {
+
+  Map<String, dynamic>? apiData;
+
+  void setApiData(Map<String, dynamic> data) {
+    apiData = data;
+    notifyListeners();
+  }
+
+  Map<String, dynamic>? getApiData() {
+    return apiData;
+  }
+
+}

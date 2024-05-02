@@ -75,7 +75,7 @@ class _NotificatState extends State<Notificat> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/gym_female.jpg"),
+                          image: AssetImage("assets/female_blur_bg.jpg"),
                           fit: BoxFit.cover
                       )
                   ),

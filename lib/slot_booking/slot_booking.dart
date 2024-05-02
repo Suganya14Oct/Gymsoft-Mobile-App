@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:gymsoft/notification/notify_me.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
@@ -98,7 +99,7 @@ class _SlotBookingState extends State<SlotBooking> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                            "assets/male_background.jpeg"),
+                            "assets/female_blur_bg.jpg"),
                         fit: BoxFit.cover
                     )
                 ),
@@ -410,7 +411,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                                   duration: Duration(seconds: 2),
                                                 )
                                               );
-                                              Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => NotifyMe()));
                                             }, child: Text('Notify Me',
                                           style: TextStyle(color: Colors.white,
                                               fontFamily: 'Telex',

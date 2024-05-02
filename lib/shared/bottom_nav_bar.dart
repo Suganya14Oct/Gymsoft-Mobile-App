@@ -55,9 +55,10 @@ class BottomNavBar extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Icon(Icons.apple_outlined,size: 28.dp,color: mainScreenNotifier.pageIndex == 1 ?  Colors.red : Colors.white,),
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Image.asset('assets/diet_small.png',height: 3.5.h,width: 7.3.w,fit: BoxFit.contain,color: mainScreenNotifier.pageIndex == 1 ? Color(0xffd41012) : Colors.white,)
                       ),
+                      SizedBox(height: 0.7.w,),
                       Text("Diet",
                         textAlign: TextAlign.end,
                         style: TextStyle(color: Colors.white,fontFamily: 'Telex',fontSize: 12.dp),)
