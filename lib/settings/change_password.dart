@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/home_page/main_screen.dart';
 import 'package:gymsoft/settings/settings.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -17,15 +22,65 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _conformpassword = TextEditingController();
   final _oldpassword = TextEditingController();
 
+  var responce;
+  var responcebody;
+  var data;
+  var refresh_response;
+  var accessToken;
+  var Token;
+
+  // @override
+  // void initState() {
+  //   setState(() {
+  //     //_isMounted = true;
+  //     print('fetchData() function called from iniState');
+  //     fetchData();
+  //   });
+  //   super.initState();
+  // }
+  //
+  // Future<void> fetchData() async {
+  //   try {
+  //     var data = await changePasswordApi(_oldpassword.text.toString(), _newpassword.text.toString(), context);
+  //
+  //     if (data != null  && mounted) {
+  //       setState(() {
+  //         responcebody = data;
+  //       });
+  //     } else  {
+  //       if(mounted){
+  //         setState((){
+  //           retryFetchData();
+  //         });
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Exception: $e');
+  //     if(mounted){
+  //       setState(() {
+  //         retryFetchData();
+  //       });
+  //     }
+  //   }
+  // }
+  //
+  // void retryFetchData() async {
+  //
+  //   const retryDelay = Duration(seconds: 1);
+  //   Timer(retryDelay, () {
+  //     if(mounted){
+  //       fetchData();
+  //     }
+  //   });
+  // }
 
   @override
   void dispose(){
-
     _newpassword.dispose();
     _conformpassword.dispose();
     _oldpassword.dispose();
+    mounted;
     super.dispose();
-
   }
 
   @override
@@ -48,7 +103,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/gym_female.jpg"),fit: BoxFit.cover
+                          image: AssetImage("assets/female_bg.jpg"),fit: BoxFit.cover
                       )
                   ),
                 ),
@@ -201,7 +256,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     onPressed: (){
                       setState(() {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                        print(_oldpassword.text.toString());
+                        print(_newpassword.text.toString());
+                        print(_conformpassword.text.toString());
+                        changePasswordApi(_oldpassword.text.toString(),_newpassword.text.toString(),context);
                       });
                     },
                     child: Text("Reset Password",style: TextStyle(fontSize: 15.0.dp,color: Colors.white70)),),
@@ -213,4 +271,70 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
     );
   }
+
+  Future<bool> refreshtoken() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? refreshToken = prefs.getString('refreshToken');
+
+    //print('in refreshToken function: $refreshToken');
+
+    if(refreshToken != null){
+      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
+          body: {'refresh' : refreshToken});
+      print('Inside refreshToken Function ${refresh_response.statusCode}');
+      if(refresh_response.statusCode == 200){
+        final responnsebody = json.decode(refresh_response.body);
+        print(responnsebody);
+        Token = responnsebody['access'];
+        print(Token);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        accessToken = prefs.setString('accessToken', Token);
+        return true;
+      }else{
+        print('failed');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  Future<void> changePasswordApi(String oldPassword, newPassword, BuildContext context) async {
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('accessToken');
+
+    try{
+      responce = await http.post(
+          Uri.parse('https://achujozef.pythonanywhere.com/api/change-password/'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
+          body: jsonEncode({
+            "old_password": oldPassword.toString(),
+            "new_password": newPassword.toString()
+          },)
+      );
+      print(responce.statusCode);
+      print(accessToken);
+
+      if(responce.statusCode == 200) {
+        responcebody = json.decode(responce.body);
+        print(responcebody);
+        if(_newpassword.text.toString() == _conformpassword.text.toString() &&
+        _oldpassword.text.toString()  != _newpassword.text.toString()) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainScreen(token: accessToken,)));
+      }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Check Your Password'),backgroundColor: Color(0xffd41012))
+          );
+        }
+      }
+    }catch (e){
+      print(e.toString());
+    }
+  }
+
 }

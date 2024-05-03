@@ -258,7 +258,7 @@ class _EquipmentsState extends State<Equipments> {
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
         print(isTokenExpired);
 
-       // print('From getapi: ${accessToken}');
+        print('From getapi: ${accessToken}');
         print('From equipmentapi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {

@@ -24,17 +24,14 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   void dispose(){
-
     _newpassword.dispose();
     _conformpassword.dispose();
     super.dispose();
-
   }
 
   var responce;
   var responcebody;
   var data;
-
 
 
   @override
@@ -218,7 +215,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           body:  {
             "phonenumber": phone,
             "newPassword": password
-          }
+          },
       );
       print(data.toString());
       print(responce.statusCode);
