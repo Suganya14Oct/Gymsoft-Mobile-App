@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/notification/notify_me.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SlotBooking extends StatefulWidget {
   const SlotBooking({super.key});
@@ -13,10 +18,21 @@ class SlotBooking extends StatefulWidget {
 
 class _SlotBookingState extends State<SlotBooking> {
 
-  final ScrollController _scrollController = ScrollController();
+  final Api _api = Api();
 
+  final ScrollController _scrollController = ScrollController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+
+  var accessToken;
+
+  var get_response;
+
+  var get_responcebody;
+
+  var refresh_response;
+
+  var Token;
 
   final List<String> forenoonSlots = [
     '6am - 7am',
@@ -78,6 +94,53 @@ class _SlotBookingState extends State<SlotBooking> {
   void initState() {
     super.initState();
     isSelected = List.generate(available_slots.length, (_) => false);
+    setState(() {
+      print('fetchData() function called from iniState');
+      fetchData();
+    });
+  }
+
+  Future<void> fetchData() async {
+    try {
+      var data = await getApi();
+
+      if (data != null && data.isNull && mounted) {
+        setState(() {
+          get_responcebody = data;
+        });
+      } else  {
+        if(mounted){
+          setState((){
+            retryFetchData();
+          });
+        }
+      }
+    } catch (e) {
+      print('Exception: $e');
+      if(mounted){
+        setState(() {
+          retryFetchData();
+        });
+      }
+    }
+  }
+
+  void retryFetchData() async {
+
+    const retryDelay = Duration(seconds: 1);
+    Timer(retryDelay, () {
+      if(mounted){
+        fetchData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _dateController.dispose();
+    mounted;
+    super.dispose();
   }
 
   @override
@@ -541,11 +604,44 @@ class _SlotBookingState extends State<SlotBooking> {
     }
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _dateController.dispose();
-    super.dispose();
+  getApi() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('accessToken');
+
+    try {
+
+      if(accessToken != null){
+        get_response = await http.get(
+          Uri.parse('https://achujozef.pythonanywhere.com/api/slots/'),
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        );
+
+        bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
+        print(isTokenExpired);
+
+        print('From getapi: ${accessToken}');
+        print('From SlotGetApi: ${get_response.statusCode}');
+
+        if (get_response.statusCode == 200) {
+          get_responcebody = await json.decode(get_response.body);
+          print('Response: $get_responcebody');
+        }
+        else if(isTokenExpired)  {
+          _api.refreshtoken();
+         // refreshtoken();
+          getApi();
+          print(accessToken);
+          print('Error: ${get_response.statusCode}');
+        }
+      }
+    } catch (e) {
+      // Handle exceptions or network errors
+      print('Exception: $e');
+    }
   }
 
 }

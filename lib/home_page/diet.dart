@@ -42,6 +42,8 @@ class _DietState extends State<Diet> {
 
   bool? is_Done;
 
+  bool toggleValue = false;
+
   @override
   void initState() {
     setState(() {
@@ -180,7 +182,7 @@ class _DietState extends State<Diet> {
                                         Text("${get_responcebody!['days']['day']}'s Diet Plan for you",
                                           style: TextStyle(color: Colors.white,
                                               fontFamily: 'Telex',fontSize: 15.0.dp),) : SizedBox(
-                                            height: 2.h,width: 4.w,
+                                            height: 2.h, width: 4.w,
                                             child: CircularProgressIndicator(color: Colors.white,)),
                                       )),
                                 )
@@ -399,9 +401,13 @@ class _DietState extends State<Diet> {
       if(accessToken != null){
         put_response = await http.post(
           Uri.parse('https://achujozef.pythonanywhere.com/api/toggle-timing/$itemId/'),
-            body:  {
-              'is_done': is_done.toString()
+            headers: {
+              'Authorization': 'Bearer $accessToken',
+              'Content-Type': 'application/json',
             },
+            body: json.encode({
+              'is_done': is_done.toString()
+            },)
         );
 
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
