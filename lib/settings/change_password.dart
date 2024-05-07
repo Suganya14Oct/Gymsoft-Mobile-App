@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/home_page/main_screen.dart';
+import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/settings/settings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -17,6 +18,8 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword> {
 
+  final Api _api = Api();
+
   final _formkey = GlobalKey<FormState>();
   final _newpassword = TextEditingController();
   final _conformpassword = TextEditingController();
@@ -25,7 +28,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   var responce;
   var responcebody;
   var data;
-  var refresh_response;
   var accessToken;
   var Token;
 
@@ -270,33 +272,6 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
       ),
     );
-  }
-
-  Future<bool> refreshtoken() async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? refreshToken = prefs.getString('refreshToken');
-
-    //print('in refreshToken function: $refreshToken');
-
-    if(refreshToken != null){
-      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
-          body: {'refresh' : refreshToken});
-      print('Inside refreshToken Function ${refresh_response.statusCode}');
-      if(refresh_response.statusCode == 200){
-        final responnsebody = json.decode(refresh_response.body);
-        print(responnsebody);
-        Token = responnsebody['access'];
-        print(Token);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        accessToken = prefs.setString('accessToken', Token);
-        return true;
-      }else{
-        print('failed');
-        return false;
-      }
-    }
-    return false;
   }
 
   Future<void> changePasswordApi(String oldPassword, newPassword, BuildContext context) async {

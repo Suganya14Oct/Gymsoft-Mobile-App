@@ -5,6 +5,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
 import 'package:gymsoft/home_page/home_page.dart';
 import 'package:gymsoft/home_page/main_screen.dart';
+import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/plan/plan.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +21,8 @@ class Paymnt extends StatefulWidget {
 }
 
 class _PaymntState extends State<Paymnt> {
+
+  final Api _api = Api();
 
   File? _selectedImage;
 

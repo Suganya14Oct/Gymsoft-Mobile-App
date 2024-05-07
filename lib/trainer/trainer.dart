@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:gymsoft/login/api.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,8 @@ class Trainer extends StatefulWidget {
 }
 
 class _TrainerState extends State<Trainer> {
+
+  final Api _api = Api();
 
   var accessToken;
 
@@ -205,33 +208,6 @@ class _TrainerState extends State<Trainer> {
     );
   }
 
-  Future<bool> refreshtoken() async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? refreshToken = prefs.getString('refreshToken');
-
-    //print('in refreshToken function: $refreshToken');
-
-    if(refreshToken != null){
-      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
-          body: {'refresh' : refreshToken});
-      print('Inside refreshToken Function ${refresh_response.statusCode}');
-      if(refresh_response.statusCode == 200){
-        final responnsebody = json.decode(refresh_response.body);
-        print(responnsebody);
-        Token = responnsebody['access'];
-        print(Token);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        accessToken = prefs.setString('accessToken', Token);
-        return true;
-      }else{
-        print('failed');
-        return false;
-      }
-    }
-    return false;
-  }
-
   getApi() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     accessToken = prefs.getString('accessToken');
@@ -260,7 +236,8 @@ class _TrainerState extends State<Trainer> {
           // print('${get_responcebody[0]['user']['first_name']}');
         }
         else if(isTokenExpired)  {
-          refreshtoken();
+          _api.refreshtoken();
+          //refreshtoken();
           getApi();
           print(accessToken);
           print('Error: ${get_response.statusCode}');

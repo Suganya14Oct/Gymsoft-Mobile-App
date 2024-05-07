@@ -4,6 +4,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 import 'package:gymsoft/controller/mainscreen_provider.dart';
 import 'package:gymsoft/home_page/main_screen.dart';
+import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/profile/profile.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+
+  final Api _api = Api();
 
   File? _selectedImage;
 
@@ -548,34 +551,6 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  Future<bool> refreshtoken() async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? refreshToken = prefs.getString('refreshToken');
-
-    //print('in refreshToken function: $refreshToken');
-
-    if(refreshToken != null){
-      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
-          body: {'refresh' : refreshToken});
-      print('Inside refreshToken Function ${refresh_response.statusCode}');
-      if(refresh_response.statusCode == 200){
-        final responnsebody = json.decode(refresh_response.body);
-        print(responnsebody);
-        Token = responnsebody['access'];
-        print(Token);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        accessToken = prefs.setString('accessToken', Token);
-        return true;
-      }else{
-        print('failed');
-        return false;
-      }
-    }
-    return false;
-  }
-
-
   putApi() async {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -628,7 +603,7 @@ class _EditProfileState extends State<EditProfile> {
         }
 
         if (response.statusCode == 401) {
-          await refreshtoken();
+          await _api.refreshtoken();
         }
         await putApi();
       }

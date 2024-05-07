@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/notification/notify_me.dart';
+import 'package:gymsoft/slot_booking/slot_booking_api.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:async';
@@ -19,6 +20,7 @@ class SlotBooking extends StatefulWidget {
 class _SlotBookingState extends State<SlotBooking> {
 
   final Api _api = Api();
+  final SlotApi _slotapi = SlotApi();
 
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _dateController = TextEditingController();
@@ -29,8 +31,6 @@ class _SlotBookingState extends State<SlotBooking> {
   var get_response;
 
   var get_responcebody;
-
-  var refresh_response;
 
   var Token;
 
@@ -97,6 +97,7 @@ class _SlotBookingState extends State<SlotBooking> {
     setState(() {
       print('fetchData() function called from iniState');
       fetchData();
+      fetchData1();
     });
   }
 
@@ -125,12 +126,38 @@ class _SlotBookingState extends State<SlotBooking> {
     }
   }
 
+  Future<void> fetchData1() async {
+    try {
+      var data = await _slotapi.getApi_booking();
+
+      if (data != null && data.isNull && mounted) {
+        setState(() {
+          _slotapi.get_responcebody = data;
+        });
+      } else  {
+        if(mounted){
+          setState((){
+            retryFetchData();
+          });
+        }
+      }
+    } catch (e) {
+      print('Exception: $e');
+      if(mounted){
+        setState(() {
+          retryFetchData();
+        });
+      }
+    }
+  }
+
   void retryFetchData() async {
 
     const retryDelay = Duration(seconds: 1);
     Timer(retryDelay, () {
       if(mounted){
         fetchData();
+        fetchData1();
       }
     });
   }
@@ -197,15 +224,23 @@ class _SlotBookingState extends State<SlotBooking> {
                         Text("Slot Booking",style: TextStyle(color: Colors.white,fontSize: 25.dp ),)
                       ],
                     ),
-                    Container(
-                      height: 5.h,
-                      width: width,
-                      margin: EdgeInsets.only(top: 4.0.h),
-                      padding: EdgeInsets.only(left: 20.0),
-                      //color: Colors.amber,
-                      child: Text('ForeNoon Slots (AM)',
-                        style: TextStyle(color: Colors.white,
-                            fontFamily: 'Telex',fontSize: 15.0.dp),
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          _slotapi.getApi_booking();
+                          print('clicked');
+                        });
+                      },
+                      child: Container(
+                        height: 5.h,
+                        width: width,
+                        margin: EdgeInsets.only(top: 4.0.h),
+                        padding: EdgeInsets.only(left: 20.0),
+                        //color: Colors.amber,
+                        child: Text('ForeNoon Slots (AM)',
+                          style: TextStyle(color: Colors.white,
+                              fontFamily: 'Telex',fontSize: 15.0.dp),
+                        ),
                       ),
                     ),
                     Container(
@@ -623,7 +658,7 @@ class _SlotBookingState extends State<SlotBooking> {
         bool isTokenExpired = await JwtDecoder.isExpired(accessToken);
         print(isTokenExpired);
 
-        print('From getapi: ${accessToken}');
+       // print('From getapi: ${accessToken}');
         print('From SlotGetApi: ${get_response.statusCode}');
 
         if (get_response.statusCode == 200) {

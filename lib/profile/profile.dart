@@ -418,34 +418,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Future<bool> refreshtoken() async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? refreshToken = prefs.getString('refreshToken');
-
-    //print('in refreshToken function: $refreshToken');
-
-    if(refreshToken != null){
-      refresh_response = await http.post(Uri.parse('https://achujozef.pythonanywhere.com/api/token/refresh/'),
-          body: {'refresh' : refreshToken});
-      print('Inside refreshToken Function ${refresh_response.statusCode}');
-      if(refresh_response.statusCode == 200){
-        final responnsebody = json.decode(refresh_response.body);
-        print(responnsebody);
-        Token = responnsebody['access'];
-        print(Token);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        accessToken = prefs.setString('accessToken', Token);
-        return true;
-      }else{
-        print('failed');
-        return false;
-      }
-    }
-    return false;
-  }
-
-
   getApi() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     accessToken = prefs.getString('accessToken');
@@ -495,7 +467,7 @@ class _ProfileState extends State<Profile> {
           });
         }
         else if(isTokenExpired)  {
-          refreshtoken();
+          _api.refreshtoken();
           getApi();
           print(accessToken);
           print('Error: ${get_response.statusCode}');
