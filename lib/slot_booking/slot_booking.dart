@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:gymsoft/login/api.dart';
 import 'package:gymsoft/notification/notify_me.dart';
+import 'package:gymsoft/slot_booking/my_bookings.dart';
 import 'package:gymsoft/slot_booking/slot_booking_api.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -355,41 +356,41 @@ class _SlotBookingState extends State<SlotBooking> with SingleTickerProviderStat
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
                         height: 7.h,
                         width: 35.w,
-                        margin: EdgeInsets.only(left: 10.0),
+                        margin: EdgeInsets.only(right: 10.0),
                         child: TextButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
                           ),
                           onPressed: (){
                             setState(() {
-
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => MyBookings()));
                             });
                           },
                           child: Text('My Bookings',style: TextStyle(color: Colors.red,fontFamily: 'Telex'),),
                         ),
                       ),
-                      Container(
-                        height: 7.h,
-                        width: 45.w,
-                        margin: EdgeInsets.only(right: 10.0),
-                        child: TextButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent)
-                          ),
-                          onPressed: (){
-                            setState(() {
-
-                            });
-                          },
-                          child: Text('Cancel Booking',
-                            style: TextStyle(color: Colors.white,fontFamily: 'Telex'),),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 7.h,
+                      //   width: 45.w,
+                      //   margin: EdgeInsets.only(right: 10.0),
+                      //   child: TextButton(
+                      //     style: ButtonStyle(
+                      //         backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent)
+                      //     ),
+                      //     onPressed: (){
+                      //       setState(() {
+                      //
+                      //       });
+                      //     },
+                      //     child: Text('Cancel Booking',
+                      //       style: TextStyle(color: Colors.white,fontFamily: 'Telex'),),
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 20.0),
