@@ -54,8 +54,10 @@ class _MyBookingsState extends State<MyBookings> {
                               height: 10.0.h,
                               width: 10.0.w,
                               child: Icon(
-                                Icons.arrow_back_ios, color: Colors.white,
-                                size: 20.dp,)
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                                size: 20.dp,
+                              )
                           ),
                         ),
                         Text("My Bookings",
@@ -88,7 +90,7 @@ class _MyBookingsState extends State<MyBookings> {
                                   )
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0,bottom: 8.0,left: 60,right: 10.0),
+                                  padding: EdgeInsets.only(top: 8.0,bottom: 8.0,left: 60,right: 10.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
